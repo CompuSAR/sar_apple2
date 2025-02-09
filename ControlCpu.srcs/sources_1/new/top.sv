@@ -57,9 +57,8 @@ module top
     inout   wire    [1:0]   ddr3_dqs_n,
     inout   wire    [15:0]  ddr3_dq
 );
-//localparam CTRL_CLOCK_HZ = 101041667;
-//localparam CTRL_CLOCK_HZ = 86607143;
-localparam CTRL_CLOCK_HZ = 75781250;
+localparam CTRL_CLOCK_HZ = 81666667;
+localparam DDR_CLOCK_MHZ = 306.25;
 localparam UART_BAUD = 115200;
 
 `ifdef SYNTHESIS
@@ -418,7 +417,7 @@ sddr_ctrl#(
     .dqs_out_o(ddr_phy_dqs_out)
 );
 
-sddr_phy_xilinx ddr_phy(
+sddr_phy_xilinx#(.DDR_CLK_MHZ(DDR_CLOCK_MHZ)) ddr_phy(
      .in_cpu_clock_i(ctrl_cpu_clock)
     ,.in_ddr_clock_i(ddr_clock)
 //     .in_ddr_clock_i(ctrl_cpu_clock)
