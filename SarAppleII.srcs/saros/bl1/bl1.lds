@@ -1,5 +1,5 @@
 # Linker script for Boot Loader stage 1
-MEMORY { preload : ORIGIN = 0x80000000, LENGTH = 0x8000 }
+MEMORY { preload : ORIGIN = 0x80000000, LENGTH = 0x4000 }
 MEMORY { discard : ORIGIN = 0x1000000, LENGTH = 0x1000000 }
 MEMORY { error : ORIGIN = 0xf0000000, LENGTH = 0 }
 MEMORY { ddr : ORIGIN = 0x80008000, LENGTH = 256*1024*1024 - 0x8000 }

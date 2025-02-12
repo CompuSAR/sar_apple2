@@ -1,10 +1,11 @@
 # Linker script for Boot Loader stage 1
-MEMORY { preload(rwx) : ORIGIN = 0x80000000, LENGTH = 0x8000 }
+MEMORY { preload(rwx) : ORIGIN = 0x80000000, LENGTH = 0x10000 }
 MEMORY { discard : ORIGIN = 0x1000000, LENGTH = 0x1000000 }
 MEMORY { error : ORIGIN = 0xf0000000, LENGTH = 0 }
-MEMORY { exe(rx) : ORIGIN = 0x80100000, LENGTH = 0x100000 }
-MEMORY { readonly(r) : ORIGIN = 0x80200000, LENGTH = 0x100000 }
-MEMORY { ram(rw) : ORIGIN = 0x80300000, LENGTH = 256*1024*1024 - 0x300000 }
+MEMORY { exe(rx) : ORIGIN = 0x80010000, LENGTH = 0xff0000 }
+MEMORY { readonly(r) : ORIGIN = 0x80100000, LENGTH = 0x100000 }
+MEMORY { mem_rw(rw) : ORIGIN = 0x80200000, LENGTH = 0x100000 }
+MEMORY { mem_16_rom(r) : ORIGIN = 0x81000000, LENGTH = 0x10000 }
 ENTRY(_start)
 SECTIONS
 {
@@ -18,11 +19,11 @@ SECTIONS
     .init_array : {
         . = ALIGN(4);
         * (.init_array)
-    } >ram
+    } >mem_rw
     .fini_array : {
         . = ALIGN(4);
         * (.fini_array)
-    } >ram
+    } >mem_rw
     .rodata : {
         . = ALIGN(4);
         *(.rodata*)
@@ -45,13 +46,13 @@ SECTIONS
         . = ALIGN(4);
          *(.data*)
         . = ALIGN(4);
-    } >ram
+    } >mem_rw
 
     .sdata : {
         . = ALIGN(4);
          *(.sdata*)
         . = ALIGN(4);
-    } >ram
+    } >mem_rw
 
     .bss : {
         . = ALIGN(32);
@@ -59,7 +60,7 @@ SECTIONS
         . = ALIGN(32);
         * (.sbss*)
         . = ALIGN(32);
-    } >ram
+    } >mem_rw
 
     PROVIDE(HEAP_START = .);
 
