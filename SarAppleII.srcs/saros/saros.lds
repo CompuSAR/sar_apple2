@@ -8,7 +8,7 @@ MEMORY { discard : ORIGIN = 0x1000000, LENGTH = 0x1000000 }
 MEMORY { error : ORIGIN = 0xf0000000, LENGTH = 0 }
 MEMORY { exe(rx) : ORIGIN = MEM_BASE + 64K, LENGTH = 1M - 64K }
 MEMORY { readonly(r) : ORIGIN = MEM_BASE + 1M, LENGTH = 1M }
-MEMORY { mem_rw(rw) : ORIGIN = MEMORY + 2M, LENGTH = 1M }
+MEMORY { mem_rw(rw) : ORIGIN = MEM_BASE + 2M, LENGTH = 1M }
 MEMORY { mem_16_rom(r) : ORIGIN = APPLE2_ROMS, LENGTH = 64K }
 ENTRY(_start)
 SECTIONS
