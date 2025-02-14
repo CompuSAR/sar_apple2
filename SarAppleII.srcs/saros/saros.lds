@@ -1,11 +1,15 @@
-# Linker script for Boot Loader stage 1
-MEMORY { preload(rwx) : ORIGIN = 0x80000000, LENGTH = 0x10000 }
+# Linker script for Saros
+
+MEM_BASE = 0x80000000;
+APPLE2_ROMS = MEM_BASE + 16M;
+
+MEMORY { preload(rwx) : ORIGIN = MEM_BASE, LENGTH = 64K }
 MEMORY { discard : ORIGIN = 0x1000000, LENGTH = 0x1000000 }
 MEMORY { error : ORIGIN = 0xf0000000, LENGTH = 0 }
-MEMORY { exe(rx) : ORIGIN = 0x80010000, LENGTH = 0xff0000 }
-MEMORY { readonly(r) : ORIGIN = 0x80100000, LENGTH = 0x100000 }
-MEMORY { mem_rw(rw) : ORIGIN = 0x80200000, LENGTH = 0x100000 }
-MEMORY { mem_16_rom(r) : ORIGIN = 0x81000000, LENGTH = 0x10000 }
+MEMORY { exe(rx) : ORIGIN = MEM_BASE + 64K, LENGTH = 1M - 64K }
+MEMORY { readonly(r) : ORIGIN = MEM_BASE + 1M, LENGTH = 1M }
+MEMORY { mem_rw(rw) : ORIGIN = MEMORY + 2M, LENGTH = 1M }
+MEMORY { mem_16_rom(r) : ORIGIN = APPLE2_ROMS, LENGTH = 64K }
 ENTRY(_start)
 SECTIONS
 {
@@ -61,6 +65,12 @@ SECTIONS
         * (.sbss*)
         . = ALIGN(32);
     } >mem_rw
+
+    .apple2_rom : {
+        . = 0xd000;     # ROM start address in 16bit address space
+        __apple2_rom = .;
+        Apple2*_rom.o (.apple2_rom);
+    } >mem_16_rom
 
     PROVIDE(HEAP_START = .);
 

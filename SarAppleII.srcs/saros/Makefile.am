@@ -15,7 +15,8 @@ TOOLCHAIN_PATH=/opt/riscv
 TOOLCHAIN_LIB_PATH=$(TOOLCHAIN_PATH)/lib/gcc/$(HOST_TRIPLET)/12.2.0
 SCRIPTS_PATH=$(top_srcdir)/../../scripts
 
-saros_elf_SOURCES=saros/start.cpp saros/uart.cpp common/format.cpp saros/irq.cpp common/reg.cpp common/gpio.cpp saros/irq_wrapper.s
+saros_elf_SOURCES=saros/start.cpp saros/uart.cpp common/format.cpp saros/irq.cpp common/reg.cpp common/gpio.cpp saros/irq_wrapper.s \
+		  roms/Apple2_Plus_rom.s
 EXTRA_saros_elf_DEPENDENCIES=$(srcdir)/saros.lds
 saros_elf_LDFLAGS=-T $(srcdir)/saros.lds
 saros_elf_LDADD=$(TOOLCHAIN_LIB_PATH)/libgcc.a $(TOOLCHAIN_PATH)/$(HOST_TRIPLET)/lib/libc.a
@@ -36,3 +37,12 @@ saros.mem: saros.bin
 	echo "@200000" > "$@.tmp"
 	hexdump -ve '16/1 "%02X " "\n"' "$<" >> "$@.tmp"
 	mv "$@.tmp" "$@"
+
+$(srcdir)/roms/%.rom:
+	wget 'https://github.com/AppleWin/AppleWin/raw/refs/heads/master/resource/$*.rom' -O '$@'.tmp
+	mv '$@.tmp' '$@'
+.PRECIOUS: $(srcdir)/roms/%.rom
+
+roms/%_rom.s: $(srcdir)/roms/%.rom $(srcdir)/roms/assemblify
+	mkdir -p roms
+	$(srcdir)/roms/assemblify --section '.apple2_rom' '$<' '$@'
