@@ -65,7 +65,8 @@ localparam UART_BAUD = 115200;
 localparam GPIO_IN_PORTS=1, GPIO_OUT_PORTS=1;
 
 // GPOUT port 1
-localparam GPOUT_6502_RESET = 0;
+localparam GPOUT0_6502_RESET = 0;
+localparam GPOUT0_FREQ_DIV_RESET = 1;
 
 `ifdef SYNTHESIS
 wire spi_clk;
@@ -161,8 +162,8 @@ localparam UART_IRQ = 0;
 logic [31:0]    iob_ddr_read_data;
 
 
-assign leds[0] = !ctrl_timer_interrupt;
-assign leds[1] = ctrl_ext_interrupt;
+assign leds[0] = !nReset || !clocks_locked;
+assign leds[1] = gp_out[0][GPOUT0_6502_RESET];
 
 VexRiscv control_cpu(
     .clk(ctrl_cpu_clock),
@@ -607,7 +608,7 @@ freq_div_bus#() freq_div_6502(
     .clock_i( ctrl_cpu_clock ),
     .ctl_div_nom_i( BUS8_FREQ_DIV ),
     .ctl_div_denom_i( 16'd1 ),
-    .reset_i( 1'b0 ),
+    .reset_i( gp_out[0][GPOUT0_FREQ_DIV_RESET] ),
 
     .slow_cmd_valid_i( bus8_req_valid ),
     .slow_cmd_ready_o( bus8_req_ack )
@@ -617,7 +618,7 @@ freq_div_bus#() freq_div_6502(
 sar6502_sync apple_cpu(
     .clock_i( ctrl_cpu_clock ),
 
-    .reset_i( gp_out[0][GPOUT_6502_RESET] ),
+    .reset_i( gp_out[0][GPOUT0_6502_RESET] ),
     .nmi_i( 1'b0 ),
     .irq_i( 1'b0 ),
     .set_overflow_i( 1'b0 ),
