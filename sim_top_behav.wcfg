@@ -7,24 +7,21 @@
          <top_modules>
             <top_module name="\$unit_xpm_cdc_sv_220102727 " />
             <top_module name="glbl" />
+            <top_module name="sar65s_ctl" />
             <top_module name="sim_top" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="275,896.167 ns"></ZoomStartTime>
-      <ZoomEndTime time="277,341.168 ns"></ZoomEndTime>
-      <Cursor1Time time="276,370.000 ns"></Cursor1Time>
+      <ZoomStartTime time="293.334 ns"></ZoomStartTime>
+      <ZoomEndTime time="4,533.335 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="196"></NameColumnWidth>
-      <ValueColumnWidth column_width="233"></ValueColumnWidth>
+      <ValueColumnWidth column_width="229"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="26" />
-   <wave_markers>
-      <marker label="" time="25390000" />
-      <marker label="" time="27940000" />
-   </wave_markers>
+   <WVObjectSize size="30" />
    <wvobject type="array" fp_name="/sim_top/top_module/debug">
       <obj_property name="ElementShortName">debug[3:0]</obj_property>
       <obj_property name="ObjectShortName">debug[3:0]</obj_property>
@@ -33,105 +30,118 @@
       <obj_property name="ElementShortName">uart_tx</obj_property>
       <obj_property name="ObjectShortName">uart_tx</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/nReset">
-      <obj_property name="ElementShortName">nReset</obj_property>
-      <obj_property name="ObjectShortName">nReset</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_buffer_fill">
-      <obj_property name="ElementShortName">spi_buffer_fill[7:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_buffer_fill[7:0]</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/clock">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/spi_flash/spi_quad_mode">
-      <obj_property name="ElementShortName">spi_quad_mode</obj_property>
-      <obj_property name="ObjectShortName">spi_quad_mode</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/clocks/locked">
+      <obj_property name="ElementShortName">locked</obj_property>
+      <obj_property name="ObjectShortName">locked</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/spi_cs_n">
-      <obj_property name="ElementShortName">spi_cs_n</obj_property>
-      <obj_property name="ObjectShortName">spi_cs_n</obj_property>
-      <obj_property name="CustomSignalColor">#800000</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/iBus_cmd_valid">
+      <obj_property name="ElementShortName">iBus_cmd_valid</obj_property>
+      <obj_property name="ObjectShortName">iBus_cmd_valid</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/spi_flash_clock">
-      <obj_property name="ElementShortName">spi_flash_clock</obj_property>
-      <obj_property name="ObjectShortName">spi_flash_clock</obj_property>
-      <obj_property name="CustomSignalColor">#800080</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/iBus_cmd_ready">
+      <obj_property name="ElementShortName">iBus_cmd_ready</obj_property>
+      <obj_property name="ObjectShortName">iBus_cmd_ready</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_dq">
-      <obj_property name="ElementShortName">spi_dq[3:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_dq[3:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/iBus_cmd_payload_pc">
+      <obj_property name="ElementShortName">iBus_cmd_payload_pc[31:0]</obj_property>
+      <obj_property name="ObjectShortName">iBus_cmd_payload_pc[31:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/spi_flash/spi_dma_read_ack">
-      <obj_property name="ElementShortName">spi_dma_read_ack</obj_property>
-      <obj_property name="ObjectShortName">spi_dma_read_ack</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/iBus_rsp_valid">
+      <obj_property name="ElementShortName">iBus_rsp_valid</obj_property>
+      <obj_property name="ObjectShortName">iBus_rsp_valid</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/spi_flash/spi_dma_read_valid">
-      <obj_property name="ElementShortName">spi_dma_read_valid</obj_property>
-      <obj_property name="ObjectShortName">spi_dma_read_valid</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/iBus_rsp_payload_inst">
+      <obj_property name="ElementShortName">iBus_rsp_payload_inst[31:0]</obj_property>
+      <obj_property name="ObjectShortName">iBus_rsp_payload_inst[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_state_next">
-      <obj_property name="ElementShortName">spi_state_next[4:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_state_next[4:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_valid_i">
+      <obj_property name="ElementShortName">port_cmd_valid_i[0:4]</obj_property>
+      <obj_property name="ObjectShortName">port_cmd_valid_i[0:4]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_state">
-      <obj_property name="ElementShortName">spi_state[4:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_state[4:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_ready_o">
+      <obj_property name="ElementShortName">port_cmd_ready_o[0:4]</obj_property>
+      <obj_property name="ObjectShortName">port_cmd_ready_o[0:4]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_dq_dir">
-      <obj_property name="ElementShortName">spi_dq_dir[3:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_dq_dir[3:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_addr_i">
+      <obj_property name="ElementShortName">port_cmd_addr_i[0:4][31:0]</obj_property>
+      <obj_property name="ObjectShortName">port_cmd_addr_i[0:4][31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_dq_o">
-      <obj_property name="ElementShortName">spi_dq_o[3:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_dq_o[3:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_write_data_i">
+      <obj_property name="ElementShortName">port_cmd_write_data_i[0:4][127:0]</obj_property>
+      <obj_property name="ObjectShortName">port_cmd_write_data_i[0:4][127:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_send_cycles">
-      <obj_property name="ElementShortName">spi_send_cycles[31:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_send_cycles[31:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_write_mask_i">
+      <obj_property name="ElementShortName">port_cmd_write_mask_i[0:4][15:0]</obj_property>
+      <obj_property name="ObjectShortName">port_cmd_write_mask_i[0:4][15:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_num_send_cycles">
-      <obj_property name="ElementShortName">spi_num_send_cycles[31:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_num_send_cycles[31:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_rsp_data">
+      <obj_property name="ElementShortName">port_rsp_data[127:0]</obj_property>
+      <obj_property name="ObjectShortName">port_rsp_data[127:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_dummy_cycles">
-      <obj_property name="ElementShortName">spi_dummy_cycles[16:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_dummy_cycles[16:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_rsp_read_data_o">
+      <obj_property name="ElementShortName">port_rsp_read_data_o[0:4][127:0]</obj_property>
+      <obj_property name="ObjectShortName">port_rsp_read_data_o[0:4][127:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_num_recv_cycles">
-      <obj_property name="ElementShortName">spi_num_recv_cycles[31:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_num_recv_cycles[31:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_rsp_valid_o">
+      <obj_property name="ElementShortName">port_rsp_valid_o[0:4]</obj_property>
+      <obj_property name="ObjectShortName">port_rsp_valid_o[0:4]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_recv_cycles">
-      <obj_property name="ElementShortName">spi_recv_cycles[31:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_recv_cycles[31:0]</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/dBus_cmd_valid">
+      <obj_property name="ElementShortName">dBus_cmd_valid</obj_property>
+      <obj_property name="ObjectShortName">dBus_cmd_valid</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_buffer_fill">
-      <obj_property name="ElementShortName">spi_buffer_fill[7:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_buffer_fill[7:0]</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/dBus_cmd_ready">
+      <obj_property name="ElementShortName">dBus_cmd_ready</obj_property>
+      <obj_property name="ObjectShortName">dBus_cmd_ready</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/spi_shift_buffer">
-      <obj_property name="ElementShortName">spi_shift_buffer[127:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_shift_buffer[127:0]</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/dBus_cmd_ready">
+      <obj_property name="ElementShortName">dBus_cmd_ready</obj_property>
+      <obj_property name="ObjectShortName">dBus_cmd_ready</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/spi_flash/dma_cmd_valid_o">
-      <obj_property name="ElementShortName">dma_cmd_valid_o</obj_property>
-      <obj_property name="ObjectShortName">dma_cmd_valid_o</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/dBus_cmd_payload_wr">
+      <obj_property name="ElementShortName">dBus_cmd_payload_wr</obj_property>
+      <obj_property name="ObjectShortName">dBus_cmd_payload_wr</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/spi_flash/dma_cmd_ack_i">
-      <obj_property name="ElementShortName">dma_cmd_ack_i</obj_property>
-      <obj_property name="ObjectShortName">dma_cmd_ack_i</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/dBus_cmd_payload_address">
+      <obj_property name="ElementShortName">dBus_cmd_payload_address[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dBus_cmd_payload_address[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/dma_cmd_address_o">
-      <obj_property name="ElementShortName">dma_cmd_address_o[31:0]</obj_property>
-      <obj_property name="ObjectShortName">dma_cmd_address_o[31:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/dBus_cmd_payload_data">
+      <obj_property name="ElementShortName">dBus_cmd_payload_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dBus_cmd_payload_data[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/spi_flash/dma_cmd_data_o">
-      <obj_property name="ElementShortName">dma_cmd_data_o[127:0]</obj_property>
-      <obj_property name="ObjectShortName">dma_cmd_data_o[127:0]</obj_property>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/dBus_cmd_payload_size">
+      <obj_property name="ElementShortName">dBus_cmd_payload_size[1:0]</obj_property>
+      <obj_property name="ObjectShortName">dBus_cmd_payload_size[1:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/spi_flash/dma_cmd_write_o">
-      <obj_property name="ElementShortName">dma_cmd_write_o</obj_property>
-      <obj_property name="ObjectShortName">dma_cmd_write_o</obj_property>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/dBus_rsp_ready">
+      <obj_property name="ElementShortName">dBus_rsp_ready</obj_property>
+      <obj_property name="ObjectShortName">dBus_rsp_ready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/dBus_rsp_error">
+      <obj_property name="ElementShortName">dBus_rsp_error</obj_property>
+      <obj_property name="ObjectShortName">dBus_rsp_error</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/dBus_rsp_data">
+      <obj_property name="ElementShortName">dBus_rsp_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dBus_rsp_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/apple_cpu/reset_i">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">reset_i</obj_property>
+      <obj_property name="ObjectShortName">reset_i</obj_property>
+      <obj_property name="label">6502_reset</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/gpio/gp_out">
+      <obj_property name="ElementShortName">gp_out[0:0][31:0]</obj_property>
+      <obj_property name="ObjectShortName">gp_out[0:0][31:0]</obj_property>
    </wvobject>
 </wave_config>

@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module gpio#(NUM_IN_PORTS = 1, NUM_OUT_PORTS = 1, GPOUT_RESET_VALUES = {{32'h0}})
+module gpio#(NUM_IN_PORTS = 1, NUM_OUT_PORTS = 1)
 (
     input               clock_i,
 
@@ -17,18 +17,30 @@ module gpio#(NUM_IN_PORTS = 1, NUM_OUT_PORTS = 1, GPOUT_RESET_VALUES = {{32'h0}}
 
     // IO
     input [31:0]        gp_in[NUM_IN_PORTS-1:0],
-    output logic[31:0]  gp_out[NUM_OUT_PORTS-1:0]
+    output [31:0]       gp_out[NUM_OUT_PORTS-1:0]
 );
 
 logic rsp_data_next;
 assign req_ready_o = 1'b1;
+
+logic [31:0] gp_out_value[NUM_OUT_PORTS] = { { 32'hffffffff } };
+assign gp_out = gp_out_value;
+
+/*
+initial begin
+    foreach( gp_out_value[i] ) begin
+        $display("Shachar gpout[%0d] = %0x", i, gp_out_value[i]);
+        //gp_out[i] =  GPOUT_RESET_VALUES[i];
+    end
+end
+*/
 
 always_ff@(posedge clock_i) begin
     rsp_data_o <= rsp_data_next;
     rsp_valid_o <= !req_write_i && req_valid_i;
 
     if( req_valid_i && req_write_i )
-        gp_out[req_addr_i] <= req_data_i;
+        gp_out_value[req_addr_i] <= req_data_i;
 end
 
 always_comb begin

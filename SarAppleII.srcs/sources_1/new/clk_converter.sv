@@ -16,9 +16,9 @@ module clk_converter(
 
 MMCME2_BASE#(
     .DIVCLK_DIVIDE(4),
-    .CLKFBOUT_MULT_F(49),
+    .CLKFBOUT_MULT_F(48.5),
     .CLKIN1_PERIOD(20.000),     // 50MHz input clock
-    .CLKOUT0_DIVIDE_F(7.5),     // 81.666667MHz output
+    .CLKOUT0_DIVIDE_F(8),     // 81.666667MHz output
     .CLKOUT1_DIVIDE(2)          // 306.250000MHz output
 ) mmcm(
     .CLKIN1(clk_in1),
