@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="apple2_sim_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="apple2_sim" />
+            <top_module name="glbl" />
+            <top_module name="sar65s_ctl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="10,576,098.337 ns"></ZoomStartTime>
+      <ZoomEndTime time="10,577,161.838 ns"></ZoomEndTime>
+      <Cursor1Time time="10,576,275.587 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="185"></NameColumnWidth>
+      <ValueColumnWidth column_width="233"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="33" />
+   <wave_markers>
+      <marker label="" time="2059949" />
+   </wave_markers>
+   <wvobject type="logic" fp_name="/apple2_sim/clock">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/apple2_sim/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/apple2_sim/sync">
+      <obj_property name="ElementShortName">sync</obj_property>
+      <obj_property name="ObjectShortName">sync</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/apple2_sim/bus8_req_valid">
+      <obj_property name="ElementShortName">bus8_req_valid</obj_property>
+      <obj_property name="ObjectShortName">bus8_req_valid</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/bus8_req_addr">
+      <obj_property name="ElementShortName">bus8_req_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">bus8_req_addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/apple2_sim/bus8_req_write">
+      <obj_property name="ElementShortName">bus8_req_write</obj_property>
+      <obj_property name="ObjectShortName">bus8_req_write</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/bus8_req_data">
+      <obj_property name="ElementShortName">bus8_req_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">bus8_req_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/apple2_sim/bus8_req_ack">
+      <obj_property name="ElementShortName">bus8_req_ack</obj_property>
+      <obj_property name="ObjectShortName">bus8_req_ack</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/apple2_sim/bus8_rsp_valid">
+      <obj_property name="ElementShortName">bus8_rsp_valid</obj_property>
+      <obj_property name="ObjectShortName">bus8_rsp_valid</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/bus8_rsp_data">
+      <obj_property name="ElementShortName">bus8_rsp_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">bus8_rsp_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/bus8_paged_req_addr">
+      <obj_property name="ElementShortName">bus8_paged_req_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bus8_paged_req_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/apple2_sim/mem_req_valid">
+      <obj_property name="ElementShortName">mem_req_valid</obj_property>
+      <obj_property name="ObjectShortName">mem_req_valid</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/mem_req_write_mask">
+      <obj_property name="ElementShortName">mem_req_write_mask[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_req_write_mask[15:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/mem_req_write_mask_expanded">
+      <obj_property name="ElementShortName">mem_req_write_mask_expanded[127:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_req_write_mask_expanded[127:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/mem_req_addr">
+      <obj_property name="ElementShortName">mem_req_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_req_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/apple2_sim/mem_req_ack">
+      <obj_property name="ElementShortName">mem_req_ack</obj_property>
+      <obj_property name="ObjectShortName">mem_req_ack</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/mem_req_data">
+      <obj_property name="ElementShortName">mem_req_data[127:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_req_data[127:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/apple2_sim/mem_rsp_valid">
+      <obj_property name="ElementShortName">mem_rsp_valid</obj_property>
+      <obj_property name="ObjectShortName">mem_rsp_valid</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/mem_rsp_data">
+      <obj_property name="ElementShortName">mem_rsp_data[127:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_rsp_data[127:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/apple_cpu/\regs[0].register /data">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      <obj_property name="label">regA</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/apple_cpu/\regs[1].register /data">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      <obj_property name="label">regX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/apple_cpu/\regs[2].register /data">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      <obj_property name="label">regY</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/apple_cpu/\regs[3].register /data">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      <obj_property name="label">regS</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/apple_cpu/\regs[4].register /data">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      <obj_property name="label">regPCL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/apple_cpu/\regs[5].register /data">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      <obj_property name="label">regPCH</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/apple_cpu/\regs[6].register /data">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      <obj_property name="label">regDL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/memory[64]">
+      <obj_property name="ElementShortName">[64][127:0]</obj_property>
+      <obj_property name="ObjectShortName">[64][127:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/memory[65]">
+      <obj_property name="ElementShortName">[65][127:0]</obj_property>
+      <obj_property name="ObjectShortName">[65][127:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/memory[66]">
+      <obj_property name="ElementShortName">[66][127:0]</obj_property>
+      <obj_property name="ObjectShortName">[66][127:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/memory[67]">
+      <obj_property name="ElementShortName">[67][127:0]</obj_property>
+      <obj_property name="ObjectShortName">[67][127:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/memory[68]">
+      <obj_property name="ElementShortName">[68][127:0]</obj_property>
+      <obj_property name="ObjectShortName">[68][127:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/memory[69]">
+      <obj_property name="ElementShortName">[69][127:0]</obj_property>
+      <obj_property name="ObjectShortName">[69][127:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/apple2_sim/memory[70]">
+      <obj_property name="ElementShortName">[70][127:0]</obj_property>
+      <obj_property name="ObjectShortName">[70][127:0]</obj_property>
+   </wvobject>
+</wave_config>
