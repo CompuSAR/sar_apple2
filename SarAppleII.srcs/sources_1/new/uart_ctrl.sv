@@ -1,7 +1,8 @@
 `timescale 1ns / 1ps
 
 module uart_ctrl#(
-    parameter ClockDivider = 50
+    parameter ClockDivider = 50,
+    parameter SimMode = 0
 )
 (
     input clock,
@@ -10,7 +11,7 @@ module uart_ctrl#(
     input req_valid_i,
     input req_write_i,
     input [31:0] req_data_i,
-    output req_ack_o,
+    output logic req_ack_o,
 
     output logic rsp_valid_o,
     output logic[31:0] rsp_data_o,
@@ -24,10 +25,19 @@ module uart_ctrl#(
 localparam REG_UART_DATA        = 16'h0000;
 localparam REG_UART_STATUS      = 16'h0004;
 
-assign req_ack_o = intr_send_ready_o || req_addr_i!=16'h0;
-
 logic [7:0] uart_send_data;
 logic uart_send_data_ready = 1'b0;
+logic receive_ready;
+
+always_comb begin
+    if( !SimMode ) begin
+        req_ack_o = intr_send_ready_o || req_addr_i!=16'h0;
+        intr_send_ready_o = receive_ready;
+    end else begin
+        req_ack_o = 1'b1;
+        intr_send_ready_o = 1'b1;
+    end
+end
 
 uart_send#(.ClockDivider(ClockDivider))
 uart_send(
@@ -36,7 +46,7 @@ uart_send(
     .data_in_ready(uart_send_data_ready),
     
     .out_bit(uart_tx),
-    .receive_ready(intr_send_ready_o)
+    .receive_ready(receive_ready)
 );
 
 always_ff@(posedge clock) begin

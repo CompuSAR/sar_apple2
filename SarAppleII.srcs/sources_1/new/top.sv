@@ -24,7 +24,6 @@ module top
 (
     input board_clock,
     input nReset,
-    input enable_uart_output,
 
     output [1:0] leds,
 
@@ -57,6 +56,13 @@ module top
     inout   wire    [1:0]   ddr3_dqs_n,
     inout   wire    [15:0]  ddr3_dq
 );
+
+`ifdef SYNTHESIS
+localparam SIM_MODE = 0;
+`else
+localparam SIM_MODE = 1;
+`endif
+
 localparam CTRL_CLOCK_HZ = 75781250;
 localparam BUS8_FREQ_DIV = 80;
 localparam DDR_CLOCK_MHZ = 303.125;
@@ -509,7 +515,7 @@ gpio(
     .rsp_data_o(gpio_rsp_data),
     .rsp_valid_o(gpio_rsp_valid),
 
-    .gp_in( '{ { 31'b0, enable_uart_output } } ),
+    .gp_in( '{ { 32'b0 } } ),
     .gp_out( gp_out )
 );
 
@@ -544,7 +550,7 @@ spi_ctrl#(.MEM_DATA_WIDTH(CACHELINE_BITS)) spi_flash(
     .dma_rsp_data_i(cache_port_rsp_read_data_n[CACHE_PORT_IDX_SPI_FLASH])
 );
 
-uart_ctrl#(.ClockDivider(CTRL_CLOCK_HZ / UART_BAUD)) uart_ctrl(
+uart_ctrl#(.ClockDivider(CTRL_CLOCK_HZ / UART_BAUD), .SimMode(SIM_MODE)) uart_ctrl(
     .clock( ctrl_cpu_clock ),
 
     .req_valid_i(uart_enable),
