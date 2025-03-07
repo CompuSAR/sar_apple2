@@ -78,6 +78,4 @@ SECTIONS
     .debug_frame : { *(.debug_frame) }
     .riscv.attributes : { *(.riscv.attributes) } >discard
     .comment : { *(.comment) } >discard
-
-    .unknown : { *(.*) } >error
 }
