@@ -1,4 +1,4 @@
-SUBDIRS=bl1
+SUBDIRS=bl1 saros/kernel
 
 ARCH=-march=rv32i
 ABI=-mabi=ilp32
@@ -18,7 +18,7 @@ SCRIPTS_PATH=$(top_srcdir)/../../scripts
 saros_elf_SOURCES=saros/start.cpp saros/uart.cpp common/format.cpp saros/irq.cpp common/reg.cpp common/gpio.cpp saros/irq_wrapper.s
 EXTRA_saros_elf_DEPENDENCIES=$(srcdir)/saros.lds
 saros_elf_LDFLAGS=-T $(srcdir)/saros.lds --orphan-handling=error
-saros_elf_LDADD=$(TOOLCHAIN_LIB_PATH)/libgcc.a $(TOOLCHAIN_PATH)/$(HOST_TRIPLET)/lib/libc.a
+saros_elf_LDADD=$(TOOLCHAIN_LIB_PATH)/libgcc.a $(TOOLCHAIN_PATH)/$(HOST_TRIPLET)/lib/libc.a saros/kernel/libkernel.a
 
 saros.elf$(EXEEXT): $(saros_elf_OBJECTS) $(EXTRA_saros_elf_DEPENDENCIES)
 	$(HOST_TRIPLET)-ld $(LDFLAGS) $(AM_LDFLAGS) $(saros_elf_LDFLAGS) -melf32lriscv $(saros_elf_OBJECTS) -o "$@" $(saros_elf_LDADD)
