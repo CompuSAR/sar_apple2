@@ -9,6 +9,7 @@ AC_CONFIG_SRCDIR([bl1/crt.s])
 # Checks for programs.
 AC_LANG(C++)
 AC_PROG_CXX
+AC_PROG_RANLIB
 AM_PROG_AS
 
 # Checks for libraries.
@@ -20,7 +21,8 @@ AM_PROG_AS
 # Checks for library functions.
 
 AC_CONFIG_FILES([Makefile
-                 bl1/Makefile])
+                 bl1/Makefile
+                 saros/kernel/Makefile])
 
 AC_SUBST([HOST_TRIPLET], [$host])
 
