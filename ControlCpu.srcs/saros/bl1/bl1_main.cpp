@@ -6,7 +6,7 @@
 #include "spi_flash.h"
 #include "uart.h"
 
-extern "C" void bl1_start();
+extern "C" void bl1_main();
 
 static constexpr unsigned int FIBONACCI_COEF = 0x9E3779B9;
 static constexpr unsigned int RANDOM_WALK_COEF = 0x26fcb789;
@@ -24,7 +24,7 @@ void hex_dump(const void *mem, size_t size) {
     }
 }
 
-void bl1_start() {
+void bl1_main() {
     for( uint32_t *bss = BSS_START; bss < &BSS_END; ++bss )
         *bss = 0;
 
