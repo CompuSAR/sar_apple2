@@ -46,7 +46,8 @@ static constexpr uint32_t MIE__MTIE_MASK = 1<<MIE__MTIE_BIT;
 static constexpr uint32_t MIE__MEIE_BIT = 11;
 static constexpr uint32_t MIE__MEIE_MASK = 1<<MIE__MEIE_BIT;
 
-static inline uint32_t csr_read(CSR csr) {
+template<CSR csr>
+uint32_t csr_read() {
     uint32_t result;
 
     asm volatile ("csrr %0, %1": "=r" (result): "i"(csr));
@@ -54,11 +55,13 @@ static inline uint32_t csr_read(CSR csr) {
     return result;
 }
 
-static inline void csr_write(CSR csr, uint32_t value) {
+template<CSR csr>
+void csr_write(uint32_t value) {
     asm volatile ("csrw %1, %0": : "r" (value), "i"(csr));
 }
 
-static inline uint32_t csr_read_write(CSR csr, uint32_t value) {
+template<CSR csr>
+uint32_t csr_read_write(uint32_t value) {
     uint32_t result;
 
     asm volatile ("csrrw %0, %1, %2": "=r"(result): "i"(csr), "r" (value));
@@ -66,7 +69,8 @@ static inline uint32_t csr_read_write(CSR csr, uint32_t value) {
     return result;
 }
 
-static inline uint32_t csr_read_set_bits(CSR csr, uint32_t value) {
+template<CSR csr>
+uint32_t csr_read_set_bits(uint32_t value) {
     uint32_t result;
 
     asm volatile ("csrrs %0, %1, %2": "=r"(result): "i"(csr), "r" (value));
@@ -74,7 +78,8 @@ static inline uint32_t csr_read_set_bits(CSR csr, uint32_t value) {
     return result;
 }
 
-static inline uint32_t csr_read_clr_bits(CSR csr, uint32_t value) {
+template<CSR csr>
+uint32_t csr_read_clr_bits(uint32_t value) {
     uint32_t result;
 
     asm volatile ("csrrc %0, %1, %2": "=r"(result): "i"(csr), "r" (value));

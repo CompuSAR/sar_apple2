@@ -84,7 +84,8 @@ static void handle_external_interrupt() {
 
 extern "C"
 void trap_handler() {
-    uint32_t cause = csr_read(CSR::mcause);
+    uint32_t cause = csr_read<CSR::mcause>();
+
     if( cause & 0x80000000 ) {
         // Interrupt
         switch( cause & 0x7fffffff ) {
@@ -110,13 +111,13 @@ void irq_external_unmask( uint32_t mask ) {
 
 void irq_init() {
     auto trap = reinterpret_cast<uintptr_t>(trap_handler_entry);
-    csr_write(CSR::mtvec, trap );
+    csr_write<CSR::mtvec>( trap );
 
     // IRQ stack pointer
-    csr_write(CSR::mscratch, 0x80008000);
+    csr_write<CSR::mscratch>(0x80008000);
 
     irq_external_mask(0xffffffff);
 
-    csr_read_set_bits( CSR::mie, MIE__MEIE_MASK );
-    csr_read_set_bits( CSR::mstatus, MSTATUS__MIE );
+    csr_read_set_bits<CSR::mie>( MIE__MEIE_MASK );
+    csr_read_set_bits<CSR::mstatus>( MSTATUS__MIE );
 }

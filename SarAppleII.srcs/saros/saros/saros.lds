@@ -13,57 +13,46 @@ MEMORY { mem_16_rom(r) : ORIGIN = APPLE2_ROMS, LENGTH = 64K }
 ENTRY(_start)
 SECTIONS
 {
-    .text : {
-        . = ALIGN(4);
-        * (.text.startup)
-        . = ALIGN(4);
+    .text : ALIGN(16) {
+        start.o (.text*)
         * (.text*)
-        . = ALIGN(4);
     } >exe
-    .init_array : {
-        . = ALIGN(4);
+    .init_array : ALIGN(4) {
+        __init_array_start = .;
         * (.init_array)
-    } >mem_rw
-    .fini_array : {
-        . = ALIGN(4);
+        __init_array_end = .;
+    } >readonly
+    .fini_array : ALIGN(4) {
         * (.fini_array)
-    } >mem_rw
-    .rodata : {
-        . = ALIGN(4);
-        *(.rodata*)
-        . = ALIGN(4);
     } >readonly
 
-    .got : {
-        . = ALIGN(4);
+    .got : ALIGN(4) {
         *(.got)
-        . = ALIGN(4);
     } >readonly
 
-    .got.plt : {
-        . = ALIGN(4);
+    .got.plt : ALIGN(4) {
         *(.got.plt)
-        . = ALIGN(4);
     } >readonly
 
-    .data : {
-        . = ALIGN(4);
-         *(.data*)
-        . = ALIGN(4);
-    } >mem_rw
+    .rodata : ALIGN(16) {
+        *(.rodata*)
+    } >readonly
 
-    .sdata : {
-        . = ALIGN(4);
+    .sdata : ALIGN(16) {
+        __global_pointer$ = . + 2K;
          *(.sdata*)
-        . = ALIGN(4);
     } >mem_rw
 
-    .bss : {
-        . = ALIGN(32);
-        * (.bss*)
-        . = ALIGN(32);
+    .sbss : ALIGN(16) {
         * (.sbss*)
-        . = ALIGN(32);
+    } >mem_rw
+
+    .bss : ALIGN(16) {
+        * (.bss*)
+    } >mem_rw
+
+    .data : ALIGN(16) {
+         *(.data*)
     } >mem_rw
 
     .apple2_rom : {
@@ -71,8 +60,6 @@ SECTIONS
         __apple2_rom = .;
         Apple2*_rom.o (.apple2_rom);
     } >mem_16_rom
-
-    PROVIDE(HEAP_START = .);
 
     /DISCARD/ : { *(.eh_frame) }
 
@@ -87,6 +74,8 @@ SECTIONS
     .debug_loclists : { *(.debug_loclists) }
     .debug_rnglists : { *(.debug_rnglists) }
     .debug_frame : { *(.debug_frame) }
-    .riscv.attributes : { *(.riscv.attributes) } >discard
-    .comment : { *(.comment) } >discard
+    .rela.text : { *(.rela.text) }
+
+    .riscv.attributes : { *(.riscv.attributes) }
+    .comment : { *(.comment) }
 }

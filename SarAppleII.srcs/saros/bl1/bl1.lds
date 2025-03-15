@@ -1,53 +1,39 @@
 # Linker script for Boot Loader stage 1
-MEMORY { preload : ORIGIN = 0x80000000, LENGTH = 0x4000 }
+
+MEM_BASE = 0x80000000;
+CACHE_SIZE = 16K;
+
+MEMORY { preload : ORIGIN = MEM_BASE, LENGTH = CACHE_SIZE }
 MEMORY { discard : ORIGIN = 0x1000000, LENGTH = 0x1000000 }
 MEMORY { error : ORIGIN = 0xf0000000, LENGTH = 0 }
-MEMORY { ddr : ORIGIN = 0x80008000, LENGTH = 256*1024*1024 - 0x8000 }
+ENTRY(_start)
 SECTIONS
 {
-    .text : {
-        . = ALIGN(4);
-        crt.o (.text*)
+    .text : AT(MEM_BASE) {
+        start.o (.text*)
         * (.text*)
-        . = ALIGN(4);
     } >preload
-    .rodata : {
-        . = ALIGN(4);
+    .rodata : ALIGN(16) {
          *(.rodata*)
-        . = ALIGN(4);
     } >preload
 
-    .data : {
-        . = ALIGN(4);
-         *(.data*)
-        . = ALIGN(4);
+    PROVIDE(__global_pointer$ = . + 2K);
+    .srodata : ALIGN(16) {
+        *(.srodata*)
     } >preload
 
-    .sdata : {
-        . = ALIGN(4);
+    .sdata : ALIGN(16) {
          *(.sdata*)
-        . = ALIGN(4);
     } >preload
 
-    .got : {
-        . = ALIGN(4);
-        *(.got)
-        . = ALIGN(4);
-    } > preload
-
-    .got.plt : {
-        . = ALIGN(4);
-        *(.got.plt)
-        . = ALIGN(4);
-    } > preload
-
-    .bss : {
-        . = ALIGN(4);
+    .sbss : ALIGN(16) {
         BSS_START = .;
-        * (.bss*)
-        . = ALIGN(4);
         * (.sbss*)
-        . = ALIGN(4);
+    } >preload
+
+    .bss : ALIGN(16) {
+        * (.bss*)
+        . = ALIGN(16);
         BSS_END = .;
 
         . = ALIGN(16);
@@ -56,6 +42,19 @@ SECTIONS
         OS_LOAD_BUFFER_END = .;
     } >preload
 
+    .data : ALIGN(16) {
+         *(.data*)
+    } >preload
+
+    .got : ALIGN(4) {
+        *(.got)
+    } > preload
+
+    .got.plt : ALIGN(4) {
+        *(.got.plt)
+    } > preload
+
+    PROVIDE(__stack_end = MEM_BASE + CACHE_SIZE);
 
     /DISCARD/ : { *(.eh_frame) }
 
@@ -74,5 +73,5 @@ SECTIONS
     .comment : { *(.comment) } >discard
     .rela.text : { *(.rela.text) } > error
 
-    PROVIDE(DDR_MEMORY = 0x80008000);
+    PROVIDE(DDR_MEMORY = MEM_BASE + 64K);
 }

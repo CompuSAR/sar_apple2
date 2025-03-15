@@ -1,48 +1,18 @@
-SUBDIRS=bl1 saros/kernel
+SUBDIRS=bl1 saros
 
 ARCH=-march=rv32i
 ABI=-mabi=ilp32
 
-AM_CCASFLAGS=$(ARCH) $(ABI)
-AM_CXXFLAGS=$(ARCH) $(ABI)
-AM_CFLAGS=$(ARCH) $(ABI)
-AM_CPPFLAGS=-I$(top_srcdir)/include -DSAROS
-
-noinst_PROGRAMS=saros.elf
-
-REMOVED_SECTIONS=
-TOOLCHAIN_PATH=/opt/riscv
-TOOLCHAIN_LIB_PATH=$(TOOLCHAIN_PATH)/lib/gcc/$(HOST_TRIPLET)/12.2.0
 SCRIPTS_PATH=$(top_srcdir)/../../scripts
 
-saros_elf_SOURCES=saros/start.cpp saros/uart.cpp common/format.cpp saros/irq.cpp common/reg.cpp common/gpio.cpp saros/irq_wrapper.s \
-                  saros/apple2.cpp roms/Apple2_Plus_rom.s
-EXTRA_saros_elf_DEPENDENCIES=$(srcdir)/saros.lds
-saros_elf_LDFLAGS=-T $(srcdir)/saros.lds --orphan-handling=error
-saros_elf_LDADD=$(TOOLCHAIN_LIB_PATH)/libgcc.a $(TOOLCHAIN_PATH)/$(HOST_TRIPLET)/lib/libc.a saros/kernel/libkernel.a
-
-saros.elf$(EXEEXT): $(saros_elf_OBJECTS) $(EXTRA_saros_elf_DEPENDENCIES)
-	$(HOST_TRIPLET)-ld $(LDFLAGS) $(AM_LDFLAGS) $(saros_elf_LDFLAGS) -melf32lriscv $(saros_elf_OBJECTS) -o "$@" $(saros_elf_LDADD)
-
-saros.bin: saros.elf$(EXEEXT)
-	cp $< $@.tmp
-	$(HOST_TRIPLET)-strip $@.tmp
-	mv $@.tmp $@
-
-saros.mcs: saros.bin
+saros.mcs: saros/saros.bin
 	$(SCRIPTS_PATH)/make_hex.py "" "$<" > "$@".tmp
 	mv "$@".tmp "$@"
 
-saros.mem: saros.bin
+saros/%:
+	$(MAKE) -C saros "$*"
+
+saros.mem: saros/saros.bin
 	echo "@200000" > "$@.tmp"
 	hexdump -ve '16/1 "%02X " "\n"' "$<" >> "$@.tmp"
 	mv "$@.tmp" "$@"
-
-$(srcdir)/roms/%.rom:
-	wget 'https://github.com/AppleWin/AppleWin/raw/refs/heads/master/resource/$*.rom' -O '$@'.tmp
-	mv '$@.tmp' '$@'
-.PRECIOUS: $(srcdir)/roms/%.rom
-
-roms/%_rom.s: $(srcdir)/roms/%.rom $(srcdir)/roms/assemblify
-	mkdir -p roms
-	$(srcdir)/roms/assemblify --section '.apple2_rom' '$<' '$@'
