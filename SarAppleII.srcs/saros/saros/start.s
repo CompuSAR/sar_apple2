@@ -7,3 +7,9 @@ _start:
         lui     tp, 0
         j       saros_main
 
+
+.section .sbss
+.global __dso_handle
+.align 4
+__dso_handle:
+    .skip 4

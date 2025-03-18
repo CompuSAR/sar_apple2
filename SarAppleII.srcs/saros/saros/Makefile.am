@@ -17,7 +17,7 @@ ABI=-mabi=ilp32
 noinst_PROGRAMS=saros.elf
 
 saros_elf_SOURCES=main.cpp uart.cpp saros.cpp $(commondir)/format.cpp irq.cpp $(commondir)/reg.cpp $(commondir)/gpio.cpp irq_wrapper.s \
-                  apple2.cpp ../roms/Apple2_Plus_rom.s start.s
+                  apple2.cpp ../roms/Apple2_Plus_rom.s start.s ../abort.cpp crt.cpp
 EXTRA_saros_elf_DEPENDENCIES=$(srcdir)/saros.lds kernel/libkernel.a
 saros_elf_LDFLAGS=-T $(srcdir)/saros.lds --orphan-handling=error
 saros_elf_LDADD=$(TOOLCHAIN_LIB_PATH)/libgcc.a $(TOOLCHAIN_PATH)/$(HOST_TRIPLET)/lib/libc.a kernel/libkernel.a

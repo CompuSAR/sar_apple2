@@ -1,22 +1,40 @@
 #pragma once
 
-#include <ds/pool.h>
+#include <saros/kernel/thread_stack.h>
 
-namespace saros::kernel {
+namespace Saros::Kernel {
 
-static constexpr size_t MaxNumThreads = 256;
+class Scheduler;
 
 class Thread {
-    static ds::PoolAllocator<Thread, MaxNumThreads> _threadPool;
-    static constexpr size_t ContextSize = 29;
+    // Assembly code assumes this is the first element
+    struct Context {
+        using GenPtr = void *;
+        GenPtr        ra,  sp,            t0,  t1,  t2,
+                 s0,  s1,  a0,  a1,  a2,  a3,  a4,  a5,
+                 a6,  a7,  s2,  s3,  s4,  s5,  s6,  s7,
+                 s8,  s9,  s10, s11, t3,  t4,  t5,  t6;
+        GenPtr   pc;
+    } _context;
+    static_assert( std::is_standard_layout_v<Context>, "Class Thread::Context must be standard layout" );
+    static_assert( sizeof(Context) == 0x78, "Mismatch between C++ and assembly context sizes" );
 
-    std::array<uint32_t, ContextSize> _context; // Assembly code assumes this is the first element
+    ThreadStackAllocator::Ptr _stack;
+    Scheduler *_scheduler;
+
+    unsigned priority = 1;
+
 public:
-    using Ptr = std::unique_ptr<Thread, ds::PoolAllocator<Thread, MaxNumThreads>&>;
-    using Entrypoint = void(*)() noexcept;
 
-    [[nodiscard]] static Ptr alloc();
+    Thread( Scheduler *scheduler, void *stack_top, ThreadStackAllocator::Ptr stackPtr, Entrypoint functionEntry, void *param );
+    Thread( const Thread & ) = delete;
+    Thread &operator=( const Thread & ) = delete;
+
+private:
+    [[noreturn]] static void threadTrampoline(Thread *self, Entrypoint functionEntry, void *param);
+
+    void push(uint32_t value);
+    void push(Context::GenPtr value);
 };
-static_assert( std::is_standard_layout_v<Thread>, "Class Thread must be standard layout" );
 
-}
+} // namespace Saros::Kernel

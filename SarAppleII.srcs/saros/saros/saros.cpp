@@ -1,12 +1,17 @@
 #include <saros/saros.h>
 
-namespace saros {
+Saros::Saros saros;
 
-Saros::Saros( kernel::Thread::Entrypoint startup_thread_function )
-{
+namespace Saros {
+
+void Saros::init( std::span<Kernel::ThreadStack> stackArea ) {
+    _scheduler.init( stackArea );
 }
 
-void Saros::run() {
+void Saros::run( Kernel::Entrypoint startupThreadFunction, void *threadParam ) {
+    Kernel::Thread *thread = _scheduler.createThread( startupThreadFunction, threadParam );
+
+    _scheduler.run( thread );
 }
 
-} // namespace saros
+} // namespace Saros
