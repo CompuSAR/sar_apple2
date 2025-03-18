@@ -40,9 +40,7 @@ void Scheduler::stopThread( Thread *thread ) {
 }
 
 void Scheduler::run( Thread *thread ) {
-    uart_send("run called\n");
     switchIn( thread );
-    uart_send( "Unreachable Scheduler::run\n");
 }
 
 } // namespace Saros::Kernel
