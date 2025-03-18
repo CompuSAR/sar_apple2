@@ -1,4 +1,5 @@
 #include "csr.h"
+#include "format.h"
 #include "irq.h"
 #include "memory.h"
 #include "reg.h"
@@ -97,7 +98,17 @@ void trap_handler() {
         }
     } else {
         // Trap
-        // TODO implement
+        uart_sync_flush_buffer();
+
+        uart_sync_message("\n\nTRAP detected. Cause 0x");
+        print_hex(cause);
+        uart_sync_message(" PC 0x");
+        print_hex( csr_read<CSR::mepc>() );
+        uart_sync_message(" MTVAL 0x");
+        print_hex( csr_read<CSR::mtval>() );
+        uart_sync_message("\n");
+
+        halt();
     }
 }
 

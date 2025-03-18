@@ -39,6 +39,13 @@ void uart_sync_flush_buffer() {
         uart_send_raw( uartBuffer.consume() );
 }
 
+void uart_sync_message( const char *message ) {
+    while( *message ) {
+        uart_send_raw(*message);
+        message++;
+    }
+}
+
 void uart_send(char c) {
     while( uartBuffer.isFull() )
         wfi();

@@ -2,7 +2,7 @@
 
 #include "uart.h"
 
-void print_hex(uint64_t number) {
+void print_hex(uint64_t number, bool sync) {
     static const char lookup[] = "0123456789abcdef";
     char buffer[16];
     int i=0;
@@ -15,7 +15,12 @@ void print_hex(uint64_t number) {
     } while(number!=0);
 
     for( int j=i-1; j>=0; --j ) {
-        uart_send(buffer[j]);
+#ifdef SAROS
+        if( sync )
+            uart_send_raw(buffer[j]);
+        else
+#endif
+            uart_send(buffer[j]);
     }
 }
 
