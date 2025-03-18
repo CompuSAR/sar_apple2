@@ -7,7 +7,7 @@
 #include <memory>
 #include <span>
 
-namespace ds {
+namespace DS {
 
 template <typename T, size_t NumElements>
 struct PoolAllocatorData {
@@ -61,8 +61,8 @@ public:
     {
         assertWithMessage( elements.size() != 0, "Allocator got an empty pool" );
 
-        _pool.pool = std::span<PoolElement>( convert(elements[0]), elements.size() );
-        _firstFree(&_pool.pool[0]);
+        _pool.pool = std::span<PoolElement>( convert(&elements[0]), elements.size() );
+        _firstFree = &_pool.pool[0];
 
         // Add all elements to the free list
         for( auto &element : _pool.pool ) {

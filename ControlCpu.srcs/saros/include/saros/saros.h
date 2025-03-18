@@ -1,14 +1,23 @@
 #pragma once
 
+#include <saros/kernel/scheduler.h>
 #include <saros/kernel/thread.h>
 
-namespace saros {
+namespace Saros {
 
 class Saros {
-public:
-    explicit Saros( kernel::Thread::Entrypoint startup_thread_function );
+    Kernel::Scheduler _scheduler;
 
-    void run();
+public:
+    Saros() = default;
+
+    Saros(const Saros &) = delete;
+    Saros &operator=(const Saros &) = delete;
+
+    void init( std::span<Kernel::ThreadStack> stackArea );
+    void run( Kernel::Entrypoint startupThreadFunction, void *param );
 };
 
 } // namespace saros
+
+extern Saros::Saros saros;

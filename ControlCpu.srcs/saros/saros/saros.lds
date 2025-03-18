@@ -11,6 +11,9 @@ MEMORY { readonly(r) : ORIGIN = MEM_BASE + 1M, LENGTH = 1M }
 MEMORY { mem_rw(rw) : ORIGIN = MEM_BASE + 2M, LENGTH = 1M }
 MEMORY { mem_16_rom(r) : ORIGIN = APPLE2_ROMS, LENGTH = 64K }
 ENTRY(_start)
+
+PROVIDE( __thread_stacks_start = MEM_BASE + 8M );
+PROVIDE( __thread_stacks_end = APPLE2_ROMS );
 SECTIONS
 {
     .text : ALIGN(16) {
@@ -36,6 +39,13 @@ SECTIONS
 
     .rodata : ALIGN(16) {
         *(.rodata*)
+    } >readonly
+
+    # Must be last section in the read only memory
+    # All s* sections need to be grouped together.
+    .srodata : ALIGN(16) {
+        #. = 1M - SIZEOF(THIS SECTION);
+        *(.srodata*)
     } >readonly
 
     .sdata : ALIGN(16) {
@@ -74,7 +84,7 @@ SECTIONS
     .debug_loclists : { *(.debug_loclists) }
     .debug_rnglists : { *(.debug_rnglists) }
     .debug_frame : { *(.debug_frame) }
-    .rela.text : { *(.rela.text) }
+    .rela.text : { *(.rela.text*) }
 
     .riscv.attributes : { *(.riscv.attributes) }
     .comment : { *(.comment) }

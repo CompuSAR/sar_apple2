@@ -34,6 +34,11 @@ void handle_uart_tx_ready_irq() {
     }
 }
 
+void uart_sync_flush_buffer() {
+    while( !uartBuffer.isEmpty() )
+        uart_send_raw( uartBuffer.consume() );
+}
+
 void uart_send(char c) {
     while( uartBuffer.isFull() )
         wfi();
