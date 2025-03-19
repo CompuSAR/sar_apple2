@@ -16,14 +16,16 @@ object GenCompuSar extends App{
           cmdForkOnSecondStage = false,
           cmdForkPersistence = false,
           prediction = NONE,
-          catchAccessFault = false,
-          compressedGen = false
+          catchAccessFault = true,
+          compressedGen = true
         ),
         new DBusSimplePlugin(
-          catchAddressMisaligned = false,
-          catchAccessFault = false
+          catchAddressMisaligned = true,
+          catchAccessFault = true
         ),
-        new CsrPlugin(CsrPluginConfig.smallest .copy(mtvecAccess=CsrAccess.READ_WRITE, mscratchGen=true)),
+        new CsrPlugin(CsrPluginConfig.smallest .copy(mtvecAccess=CsrAccess.READ_WRITE,
+            mscratchGen=true, mepcAccess=CsrAccess.READ_WRITE, mcauseAccess=CsrAccess.READ_ONLY,
+            mbadaddrAccess=CsrAccess.READ_ONLY )),
         new DecoderSimplePlugin(
           catchIllegalInstruction = false
         ),
