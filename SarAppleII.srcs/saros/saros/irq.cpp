@@ -101,11 +101,11 @@ void trap_handler() {
         uart_sync_flush_buffer();
 
         uart_sync_message("\n\nTRAP detected. Cause 0x");
-        print_hex(cause);
+        print_hex(cause, true);
         uart_sync_message(" PC 0x");
-        print_hex( csr_read<CSR::mepc>() );
-        uart_sync_message(" MTVAL 0x");
-        print_hex( csr_read<CSR::mtval>() );
+        print_hex( csr_read<CSR::mepc>(), true );
+        uart_sync_message(" Trap value 0x");
+        print_hex( csr_read<CSR::mtval>(), true );
         uart_sync_message("\n");
 
         halt();
