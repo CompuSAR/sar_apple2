@@ -223,7 +223,6 @@ bus_width_adjust#(.OUT_WIDTH(CACHELINE_BITS)) dBus_width_adjuster(
     );
 
 assign ctrl_iBus_rsp_payload_error = 0;
-assign ctrl_dBus_rsp_error = 0;
 
 logic ddr_ready, ddr_rsp_valid, ddr_write_data_ready;
 logic ddr_ctrl_cmd_valid, ddr_ctrl_cmd_ready, ddr_ctrl_rsp_valid;
@@ -249,6 +248,7 @@ io_block#(.CLOCK_HZ(CTRL_CLOCK_HZ)) iob(
     .data_out(ctrl_dBus_rsp_data),
 
     .req_ack(ctrl_dBus_cmd_ready),
+    .rsp_error(ctrl_dBus_rsp_error),
     .rsp_valid(ctrl_dBus_rsp_valid),
 
     .passthrough_ddr_enable(cache_port_cmd_valid_s[CACHE_PORT_IDX_DBUS]),

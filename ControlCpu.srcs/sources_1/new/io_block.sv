@@ -31,6 +31,7 @@ module io_block#(
     input write,
     output logic [31:0] data_out,
     output logic req_ack,
+    output logic rsp_error,
     output logic rsp_valid,
 
     output logic passthrough_ddr_enable,
@@ -107,6 +108,7 @@ endfunction
 always_comb begin
     // Previous cycle analysis
     rsp_valid = 1'bX;
+    rsp_error = 1'b0;
     data_out = 32'bX;
 
     if( previous_valid ) begin
@@ -134,6 +136,10 @@ always_comb begin
                 8'h4: begin                     // SPI controller
                     rsp_valid = passthrough_spi_rsp_valid;
                     data_out = passthrough_spi_rsp_data;
+                end
+                default: begin                  // Invalid memory access
+                    rsp_valid = 1'b1;
+                    rsp_error = 1'b1;
                 end
             endcase
         end
@@ -173,6 +179,11 @@ always_comb begin
                 8'h4: begin                 // SPI controller
                     passthrough_spi_enable = 1'b1;
                     req_ack = passthrough_spi_req_ack;
+                end
+                default: begin
+                    // Bus error case. If it's a read, it's handled with the
+                    // responses. If it's a write, we have no way to
+                    // communicate this to the CPU, so just do nothing.
                 end
             endcase
         end
