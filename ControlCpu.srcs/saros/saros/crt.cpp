@@ -1,5 +1,9 @@
-#include <string.h>
+#include <memory.h>
 
-void *memset (void *p, int c, size_t n) {
-    return __builtin_memset(p, c, n);
+void clrmem(uint32_t *ptr, size_t size) {
+    while( size!=0 ) {
+        *ptr = 0;
+        ptr++;
+        size--;
+    }
 }

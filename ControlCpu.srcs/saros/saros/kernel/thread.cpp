@@ -3,8 +3,7 @@
 #include <saros/kernel/scheduler.h>
 
 #include <ds/pool.h>
-
-#include <string.h>
+#include <memory.h>
 
 namespace Saros::Kernel {
 
@@ -14,7 +13,7 @@ Thread::Thread( Scheduler *scheduler, void *stack_top, ThreadStackAllocator::Ptr
 {
     static_assert( offsetof(Thread, _context)==0 );
 
-    memset( &_context, 0, sizeof(Context) );
+    clrmem( reinterpret_cast<uint32_t *>(&_context), sizeof(Context)/sizeof(uint32_t) );
     _context.sp = stack_top;
     _context.pc = reinterpret_cast<void*>(threadTrampoline);
     _context.a0 = this;

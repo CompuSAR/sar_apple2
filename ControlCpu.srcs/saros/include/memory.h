@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstddef>
+#include <cstdint>
+
 static inline void fence() {
     asm volatile("" ::: "memory");
 }
@@ -19,3 +22,5 @@ static inline void wrb() {
 static inline void wwb() {
     fence();
 }
+
+void clrmem(uint32_t *ptr, size_t size);
