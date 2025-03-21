@@ -12,21 +12,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="7,680.183333 us"></ZoomStartTime>
-      <ZoomEndTime time="7,734.363334 us"></ZoomEndTime>
-      <Cursor1Time time="7,700.000000 us"></Cursor1Time>
+      <ZoomStartTime time="5,443,013.545 ns"></ZoomStartTime>
+      <ZoomEndTime time="5,444,214.546 ns"></ZoomEndTime>
+      <Cursor1Time time="5,443,213.711 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="196"></NameColumnWidth>
-      <ValueColumnWidth column_width="209"></ValueColumnWidth>
+      <ValueColumnWidth column_width="197"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="50" />
-   <wave_markers>
-      <marker label="" time="1352544845" />
-      <marker label="" time="5100556391" />
-      <marker label="" time="5658623195" />
-      <marker label="" time="5663967525" />
-   </wave_markers>
+   <WVObjectSize size="27" />
    <wvobject type="array" fp_name="/sim_top/top_module/debug">
       <obj_property name="ElementShortName">debug[3:0]</obj_property>
       <obj_property name="ObjectShortName">debug[3:0]</obj_property>
@@ -52,6 +46,10 @@
       <obj_property name="ElementShortName">locked</obj_property>
       <obj_property name="ObjectShortName">locked</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/RegFilePlugin_regFile">
+      <obj_property name="ElementShortName">RegFilePlugin_regFile[0:31][31:0]</obj_property>
+      <obj_property name="ObjectShortName">RegFilePlugin_regFile[0:31][31:0]</obj_property>
+   </wvobject>
    <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/iBus_cmd_valid">
       <obj_property name="ElementShortName">iBus_cmd_valid</obj_property>
       <obj_property name="ObjectShortName">iBus_cmd_valid</obj_property>
@@ -68,41 +66,13 @@
       <obj_property name="ElementShortName">iBus_rsp_valid</obj_property>
       <obj_property name="ObjectShortName">iBus_rsp_valid</obj_property>
    </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/ctrl_iBus_rsp_payload_error">
+      <obj_property name="ElementShortName">ctrl_iBus_rsp_payload_error</obj_property>
+      <obj_property name="ObjectShortName">ctrl_iBus_rsp_payload_error</obj_property>
+   </wvobject>
    <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/iBus_rsp_payload_inst">
       <obj_property name="ElementShortName">iBus_rsp_payload_inst[31:0]</obj_property>
       <obj_property name="ObjectShortName">iBus_rsp_payload_inst[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_valid_i">
-      <obj_property name="ElementShortName">port_cmd_valid_i[0:4]</obj_property>
-      <obj_property name="ObjectShortName">port_cmd_valid_i[0:4]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_ready_o">
-      <obj_property name="ElementShortName">port_cmd_ready_o[0:4]</obj_property>
-      <obj_property name="ObjectShortName">port_cmd_ready_o[0:4]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_addr_i">
-      <obj_property name="ElementShortName">port_cmd_addr_i[0:4][31:0]</obj_property>
-      <obj_property name="ObjectShortName">port_cmd_addr_i[0:4][31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_write_data_i">
-      <obj_property name="ElementShortName">port_cmd_write_data_i[0:4][127:0]</obj_property>
-      <obj_property name="ObjectShortName">port_cmd_write_data_i[0:4][127:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_cmd_write_mask_i">
-      <obj_property name="ElementShortName">port_cmd_write_mask_i[0:4][15:0]</obj_property>
-      <obj_property name="ObjectShortName">port_cmd_write_mask_i[0:4][15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_rsp_data">
-      <obj_property name="ElementShortName">port_rsp_data[127:0]</obj_property>
-      <obj_property name="ObjectShortName">port_rsp_data[127:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_rsp_read_data_o">
-      <obj_property name="ElementShortName">port_rsp_read_data_o[0:4][127:0]</obj_property>
-      <obj_property name="ObjectShortName">port_rsp_read_data_o[0:4][127:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/cache/port_rsp_valid_o">
-      <obj_property name="ElementShortName">port_rsp_valid_o[0:4]</obj_property>
-      <obj_property name="ObjectShortName">port_rsp_valid_o[0:4]</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/dBus_cmd_valid">
       <obj_property name="ElementShortName">dBus_cmd_valid</obj_property>
@@ -163,73 +133,5 @@
       <obj_property name="label">6502_reset</obj_property>
       <obj_property name="CustomSignalColor">#0000A0</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/apple_cpu/sync_o">
-      <obj_property name="ElementShortName">sync_o</obj_property>
-      <obj_property name="ObjectShortName">sync_o</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/apple_cpu/bus_req_valid_o">
-      <obj_property name="ElementShortName">bus_req_valid_o</obj_property>
-      <obj_property name="ObjectShortName">bus_req_valid_o</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/apple_cpu/bus_req_address_o">
-      <obj_property name="ElementShortName">bus_req_address_o[15:0]</obj_property>
-      <obj_property name="ObjectShortName">bus_req_address_o[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/apple_cpu/bus_req_write_o">
-      <obj_property name="ElementShortName">bus_req_write_o</obj_property>
-      <obj_property name="ObjectShortName">bus_req_write_o</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/apple_cpu/bus_req_ack_i">
-      <obj_property name="ElementShortName">bus_req_ack_i</obj_property>
-      <obj_property name="ObjectShortName">bus_req_ack_i</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/apple_cpu/bus_req_data_o">
-      <obj_property name="ElementShortName">bus_req_data_o[7:0]</obj_property>
-      <obj_property name="ObjectShortName">bus_req_data_o[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/apple_cpu/bus_rsp_valid_i">
-      <obj_property name="ElementShortName">bus_rsp_valid_i</obj_property>
-      <obj_property name="ObjectShortName">bus_rsp_valid_i</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/apple_cpu/bus_rsp_data_i">
-      <obj_property name="ElementShortName">bus_rsp_data_i[7:0]</obj_property>
-      <obj_property name="ObjectShortName">bus_rsp_data_i[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/gpio/gp_out">
-      <obj_property name="ElementShortName">gp_out[0:0][31:0]</obj_property>
-      <obj_property name="ObjectShortName">gp_out[0:0][31:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/pager/ctrl_req_valid_i">
-      <obj_property name="ElementShortName">ctrl_req_valid_i</obj_property>
-      <obj_property name="ObjectShortName">ctrl_req_valid_i</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/pager/ctrl_req_write_i">
-      <obj_property name="ElementShortName">ctrl_req_write_i</obj_property>
-      <obj_property name="ObjectShortName">ctrl_req_write_i</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/pager/ctrl_req_addr_i">
-      <obj_property name="ElementShortName">ctrl_req_addr_i[15:0]</obj_property>
-      <obj_property name="ObjectShortName">ctrl_req_addr_i[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/pager/ctrl_req_data_i">
-      <obj_property name="ElementShortName">ctrl_req_data_i[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ctrl_req_data_i[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/pager/ctrl_req_ack_o">
-      <obj_property name="ElementShortName">ctrl_req_ack_o</obj_property>
-      <obj_property name="ObjectShortName">ctrl_req_ack_o</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/pager/ctrl_rsp_valid_o">
-      <obj_property name="ElementShortName">ctrl_rsp_valid_o</obj_property>
-      <obj_property name="ObjectShortName">ctrl_rsp_valid_o</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/pager/ctrl_rsp_data_o">
-      <obj_property name="ElementShortName">ctrl_rsp_data_o[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ctrl_rsp_data_o[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/pager/mapper">
-      <obj_property name="ElementShortName">mapper[0:2][0:1][31:0]</obj_property>
-      <obj_property name="ObjectShortName">mapper[0:2][0:1][31:0]</obj_property>
    </wvobject>
 </wave_config>

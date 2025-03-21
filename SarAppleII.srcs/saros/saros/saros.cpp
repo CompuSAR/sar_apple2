@@ -1,5 +1,7 @@
 #include <saros/saros.h>
 
+#include <span>
+
 Saros::Saros saros;
 
 namespace Saros {
