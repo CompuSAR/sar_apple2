@@ -2,7 +2,7 @@
 switchIn:
     .option arch, +zicsr
 
-    mv a0, tp
+    mv tp, a0
 
     # Initially use a0 for Thread pointer until the pipeline finishes flushing a0 into tp
 
