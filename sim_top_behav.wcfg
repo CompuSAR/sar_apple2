@@ -12,15 +12,18 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="5,443,013.545 ns"></ZoomStartTime>
-      <ZoomEndTime time="5,444,214.546 ns"></ZoomEndTime>
-      <Cursor1Time time="5,443,213.711 ns"></Cursor1Time>
+      <ZoomStartTime time="6,555,859.718 ns"></ZoomStartTime>
+      <ZoomEndTime time="6,555,986.919 ns"></ZoomEndTime>
+      <Cursor1Time time="6,555,903.195 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="196"></NameColumnWidth>
-      <ValueColumnWidth column_width="197"></ValueColumnWidth>
+      <ValueColumnWidth column_width="193"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="27" />
+   <wave_markers>
+      <marker label="" time="6555903195" />
+   </wave_markers>
    <wvobject type="array" fp_name="/sim_top/top_module/debug">
       <obj_property name="ElementShortName">debug[3:0]</obj_property>
       <obj_property name="ObjectShortName">debug[3:0]</obj_property>
@@ -49,6 +52,7 @@
    <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/RegFilePlugin_regFile">
       <obj_property name="ElementShortName">RegFilePlugin_regFile[0:31][31:0]</obj_property>
       <obj_property name="ObjectShortName">RegFilePlugin_regFile[0:31][31:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/iBus_cmd_valid">
       <obj_property name="ElementShortName">iBus_cmd_valid</obj_property>

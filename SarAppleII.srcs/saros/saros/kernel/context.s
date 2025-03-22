@@ -1,7 +1,72 @@
-.global switchIn
-switchIn:
     .option arch, +zicsr
 
+.global switchOutCoop
+switchOutCoop:
+    # The thread knows it is calling a function. Only store the callee saved registers
+    li t0, 8                    # MIE bit in MSTATUS
+    csrrc  x0, mstatus, t0      # Disable interrupts while switching
+
+    sw ra, 0x74(tp)             # RA goes to the PC after restore
+    sw sp, 0x04(tp)
+    sw s0, 0x14(tp)
+    sw s1, 0x18(tp)
+    sw s2, 0x3c(tp)
+    sw s3, 0x40(tp)
+    sw s4, 0x44(tp)
+    sw s5, 0x48(tp)
+    sw s6, 0x4c(tp)
+    sw s7, 0x50(tp)
+    sw s8, 0x54(tp)
+    sw s9, 0x58(tp)
+    sw s10, 0x5c(tp)
+    sw s11, 0x60(tp)
+
+    # At this point the thread is saved. Call the scheduler telling it we're from function call
+    j  reschedule
+
+.global switchOutIrq
+switchOutIrq:
+    sw ra, 0x00(tp)
+    sw sp, 0x04(tp)
+    sw t0, 0x08(tp)
+    sw t1, 0x0c(tp)
+
+    csrr t1, mepc
+
+    sw t2, 0x10(tp)
+    sw s0, 0x14(tp)
+    sw s1, 0x18(tp)
+    sw a0, 0x1c(tp)
+    sw a1, 0x20(tp)
+    sw a2, 0x24(tp)
+    sw a3, 0x28(tp)
+    sw a4, 0x2c(tp)
+    sw a5, 0x30(tp)
+    sw a6, 0x34(tp)
+    sw a7, 0x38(tp)
+    sw s2, 0x3c(tp)
+    sw s3, 0x40(tp)
+    sw s4, 0x44(tp)
+    sw s5, 0x48(tp)
+    sw s6, 0x4c(tp)
+    sw s7, 0x50(tp)
+    sw s8, 0x54(tp)
+    sw s9, 0x58(tp)
+    sw s10, 0x5c(tp)
+    sw s11, 0x60(tp)
+    sw t3, 0x64(tp)
+    sw t4, 0x68(tp)
+    sw t5, 0x6c(tp)
+    sw t6, 0x70(tp)
+    sw t1, 0x74(tp)     # PC
+
+    csrr sp, mscratch
+    li ra, 0
+    j trap_handler
+
+
+.global switchIn
+switchIn:
     mv tp, a0
 
     # Initially use a0 for Thread pointer until the pipeline finishes flushing a0 into tp
