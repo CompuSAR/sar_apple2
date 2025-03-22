@@ -43,4 +43,13 @@ void Scheduler::run( Thread *thread ) {
     switchIn( thread );
 }
 
+namespace {
+
+extern "C"
+[[noreturn]] void reschedule() {
+    abortWithMessage("Reschedule called");
+}
+
+}
+
 } // namespace Saros::Kernel
