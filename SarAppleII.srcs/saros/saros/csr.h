@@ -50,6 +50,7 @@ template<CSR csr>
 uint32_t csr_read() {
     uint32_t result;
 
+    asm volatile (".option arch, +zicsr");
     asm volatile ("csrr %0, %1": "=r" (result): "i"(csr));
 
     return result;
@@ -57,6 +58,7 @@ uint32_t csr_read() {
 
 template<CSR csr>
 void csr_write(uint32_t value) {
+    asm volatile (".option arch, +zicsr");
     asm volatile ("csrw %1, %0": : "r" (value), "i"(csr));
 }
 
@@ -64,6 +66,7 @@ template<CSR csr>
 uint32_t csr_read_write(uint32_t value) {
     uint32_t result;
 
+    asm volatile (".option arch, +zicsr");
     asm volatile ("csrrw %0, %1, %2": "=r"(result): "i"(csr), "r" (value));
 
     return result;
@@ -73,6 +76,7 @@ template<CSR csr>
 uint32_t csr_read_set_bits(uint32_t value) {
     uint32_t result;
 
+    asm volatile (".option arch, +zicsr");
     asm volatile ("csrrs %0, %1, %2": "=r"(result): "i"(csr), "r" (value));
 
     return result;
@@ -82,6 +86,7 @@ template<CSR csr>
 uint32_t csr_read_clr_bits(uint32_t value) {
     uint32_t result;
 
+    asm volatile (".option arch, +zicsr");
     asm volatile ("csrrc %0, %1, %2": "=r"(result): "i"(csr), "r" (value));
 
     return result;

@@ -1,5 +1,7 @@
 .global switchIn
 switchIn:
+    .option arch, +zicsr
+
     mv a0, tp
 
     # Initially use a0 for Thread pointer until the pipeline finishes flushing a0 into tp
