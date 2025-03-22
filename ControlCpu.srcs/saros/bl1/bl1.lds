@@ -56,7 +56,7 @@ SECTIONS
 
     PROVIDE(__stack_end = MEM_BASE + CACHE_SIZE);
 
-    /DISCARD/ : { *(.eh_frame) }
+    /DISCARD/ : { *(.eh_frame) *(.note.GNU-stack) }
 
     .debug_info : { *(.debug_info) }
     .debug_abbrev : { *(.debug_abbrev) }

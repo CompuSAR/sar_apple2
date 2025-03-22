@@ -7,7 +7,7 @@ AM_CPPFLAGS=-I$(top_srcdir)/include -DSAROS
 
 REMOVED_SECTIONS=
 TOOLCHAIN_PATH=/opt/riscv
-TOOLCHAIN_LIB_PATH=$(TOOLCHAIN_PATH)/lib/gcc/$(HOST_TRIPLET)/12.2.0
+TOOLCHAIN_LIB_PATH=$(TOOLCHAIN_PATH)/lib/gcc/$(HOST_TRIPLET)/14.2.0
 
 commondir=$(top_srcdir)/common
 

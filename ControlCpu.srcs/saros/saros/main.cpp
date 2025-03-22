@@ -5,8 +5,6 @@
 
 #include <saros/saros.h>
 
-#include "apple2.h"
-
 extern void startup_function(void *) noexcept;
 extern "C" void (*__init_array_start[])();
 extern "C" void (*__init_array_end)();
@@ -32,5 +30,5 @@ int saros_main() {
 
 void startup_function(void *) noexcept {
     uart_send("Startup function called\n");
-    apple2_init();
+    halt();
 }

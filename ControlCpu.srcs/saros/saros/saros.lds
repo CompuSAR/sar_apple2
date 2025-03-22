@@ -22,7 +22,8 @@ SECTIONS
     } >exe
     .init_array : ALIGN(4) {
         __init_array_start = .;
-        * (.init_array)
+        * (.init_array.00000)
+        * (.init_array*)
         __init_array_end = .;
     } >readonly
     .fini_array : ALIGN(4) {
@@ -71,7 +72,7 @@ SECTIONS
         Apple2*_rom.o (.apple2_rom);
     } >mem_16_rom
 
-    /DISCARD/ : { *(.eh_frame) }
+    /DISCARD/ : { *(.eh_frame) *(.note.GNU-stack) }
 
     .debug_info : { *(.debug_info) }
     .debug_abbrev : { *(.debug_abbrev) }

@@ -1,5 +1,6 @@
 .global trap_handler_entry
 trap_handler_entry:
+    .option arch, +zicsr
     csrrw       sp, mscratch, sp
 
 # Push registers
