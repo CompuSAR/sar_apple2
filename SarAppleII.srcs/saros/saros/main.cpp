@@ -15,8 +15,6 @@ extern "C" Saros::Kernel::ThreadStack __thread_stacks_start[], __thread_stacks_e
 
 extern "C"
 int saros_main() {
-    irq_init();
-
     // Run "pre main" functions
     for( auto ptr = __init_array_start; ptr != &__init_array_end; ++ptr )
         (*ptr)();

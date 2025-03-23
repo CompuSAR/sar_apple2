@@ -14,6 +14,7 @@ ENTRY(_start)
 
 PROVIDE( __thread_stacks_start = MEM_BASE + 8M );
 PROVIDE( __thread_stacks_end = APPLE2_ROMS );
+PROVIDE( __trap_stack_end = MEM_BASE + 64K );
 SECTIONS
 {
     .text : ALIGN(16) {

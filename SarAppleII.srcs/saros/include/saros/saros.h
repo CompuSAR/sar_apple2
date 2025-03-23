@@ -8,6 +8,8 @@ namespace Saros {
 class Saros {
     Kernel::Scheduler _scheduler;
 
+    friend Kernel::Scheduler;
+
 public:
     Saros() = default;
 
@@ -16,6 +18,9 @@ public:
 
     void init( std::span<Kernel::ThreadStack> stackArea );
     void run( Kernel::Entrypoint startupThreadFunction, void *param );
+
+private:
+    void initIrq();
 };
 
 } // namespace saros

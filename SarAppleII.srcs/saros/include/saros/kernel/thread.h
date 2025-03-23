@@ -2,6 +2,9 @@
 
 #include <saros/kernel/thread_stack.h>
 
+#define BOOST_INTRUSIVE_SAFE_HOOK_DEFAULT_ASSERT(cond) assertWithMessage(cond, "Boost assert failed")
+#include <boost/intrusive/list.hpp>
+
 namespace Saros::Kernel {
 
 class Scheduler;
@@ -21,9 +24,12 @@ class Thread {
 
     ThreadStackAllocator::Ptr _stack;
     Scheduler *_scheduler;
+    boost::intrusive::list_member_hook< boost::intrusive::link_mode<boost::intrusive::auto_unlink> > _listHook;
+    enum class State { Ready, Waiting, Idle } _state = State::Idle;
 
     unsigned priority = 1;
 
+    friend Scheduler;
 public:
 
     Thread( Scheduler *scheduler, void *stack_top, ThreadStackAllocator::Ptr stackPtr, Entrypoint functionEntry, void *param );
@@ -35,6 +41,14 @@ private:
 
     void push(uint32_t value);
     void push(Context::GenPtr value);
+
+    // For use by the scheduler
+    void setState( State state ) {
+        _state = state;
+    }
+    State getState() const {
+        return _state;
+    }
 };
 
 } // namespace Saros::Kernel
