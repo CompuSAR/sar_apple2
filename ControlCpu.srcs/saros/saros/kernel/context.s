@@ -21,8 +21,8 @@ switchOutCoop:
     sw s10, 0x5c(tp)
     sw s11, 0x60(tp)
 
-    # At this point the thread is saved. Call the scheduler telling it we're from function call
-    j  reschedule
+    # At this point the thread is saved. Call Saros::Kernel::Scheduler::reschedule
+    j _ZN5Saros6Kernel9Scheduler10rescheduleEv
 
 .global switchOutIrq
 switchOutIrq:

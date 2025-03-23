@@ -120,15 +120,3 @@ void irq_external_unmask( uint32_t mask ) {
     reg_write_32( DEVICE_NUM, REG_IRQ_MASK_CLEAR, mask );
 }
 
-void irq_init() {
-    auto trap = reinterpret_cast<uintptr_t>(trap_handler_entry);
-    csr_write<CSR::mtvec>( trap );
-
-    // IRQ stack pointer
-    csr_write<CSR::mscratch>(0x80008000);
-
-    irq_external_mask(0xffffffff);
-
-    csr_read_set_bits<CSR::mie>( MIE__MEIE_MASK );
-    csr_read_set_bits<CSR::mstatus>( MSTATUS__MIE );
-}

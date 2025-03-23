@@ -60,7 +60,7 @@
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
     <Option Name="FeatureSet" Val="FeatureSet_Classic"/>
-    <Option Name="WTXSimLaunchSim" Val="1273"/>
+    <Option Name="WTXSimLaunchSim" Val="1274"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -412,6 +412,7 @@
       </Config>
     </FileSet>
     <FileSet Name="sim_RiscV" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_RiscV" RelGenDir="$PGENDIR/sim_RiscV">
+      <Filter Type="Srcs"/>
       <File Path="$PSRCDIR/sim_RiscV/new/sim_riscv.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
