@@ -36,6 +36,8 @@ wire    [3:0]   spi_flash_dq;
 wire    [1:0]   ddr3_dqs_p;
 wire    [1:0]   ddr3_dqs_n;
 wire    [15:0]  ddr3_dq;
+wire            uart_in;
+logic           uart_send_valid = 1'b0, uart_send_ready;
 
 wire[3:0] debugs;
 
@@ -43,7 +45,7 @@ top top_module(
     .board_clock(clock), .nReset(nReset),
     .spi_cs_n(spi_flash_cs), .spi_dq(spi_flash_dq), .spi_clk(spi_flash_clock), .debug(debugs),
     .ddr3_dqs_p(ddr3_dqs_p), .ddr3_dqs_n(ddr3_dqs_n), .ddr3_dq(ddr3_dq),
-    .uart_rx(1'b1)
+    .uart_rx(uart_in)
 );
 
 ddr3_model ddr(
@@ -77,8 +79,12 @@ typedef enum logic[3:0] {
 } DdrCmd;
 DdrCmd ddr_cmd;
 
+uart_send#(.ClockDivider(10)) sender(.clock(clock), .data_in(8'h41), .data_in_ready(1'b1), .out_bit(uart_in), .receive_ready(uart_send_ready));
+
 always_comb
     $cast( ddr_cmd, {1'b0 ,top_module.ddr3_ras_n ,top_module.ddr3_cas_n ,top_module.ddr3_we_n} );
+
+logic [63:0] cycles_counter = 0;
 
 /*
 ddr3 ddr(

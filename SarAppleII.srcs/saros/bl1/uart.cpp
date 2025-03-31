@@ -3,6 +3,9 @@
 static volatile unsigned long *uart = reinterpret_cast<unsigned long *>(0xc000'0000);
 
 void uart_send(char c) {
+    if( c=='\n' )
+        uart_send('\r');
+
     *uart = static_cast<unsigned long>(c) & 0xff;
 }
 

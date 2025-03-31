@@ -551,7 +551,7 @@ spi_ctrl#(.MEM_DATA_WIDTH(CACHELINE_BITS)) spi_flash(
     .dma_rsp_data_i(cache_port_rsp_read_data_n[CACHE_PORT_IDX_SPI_FLASH])
 );
 
-uart_ctrl#(.ClockDivider(CTRL_CLOCK_HZ / UART_BAUD), .SimMode(SIM_MODE)) uart_ctrl(
+uart_ctrl#(.ClockDivider(SIM_MODE ? 10 : CTRL_CLOCK_HZ / UART_BAUD), .SimMode(SIM_MODE)) uart_ctrl(
     .clock( ctrl_cpu_clock ),
 
     .req_valid_i(uart_enable),
@@ -583,6 +583,11 @@ STARTUPE2 startup_cfg(
 );
 
 genvar i;
+generate
+    for(i=2; i<32; ++i)
+        assign irq_lines[i] = 1'b0;
+endgenerate
+
 generate
     for(i=0; i<CACHELINE_BYTES; ++i)
         assign cache_port_cmd_write_mask_s[CACHE_PORT_IDX_SPI_FLASH][i] = spi_flash_dma_write;
