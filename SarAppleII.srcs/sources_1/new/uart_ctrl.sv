@@ -17,6 +17,7 @@ module uart_ctrl#(
     output logic[31:0] rsp_data_o,
 
     output logic intr_send_ready_o,
+    output logic intr_recv_ready_o = 1'b0,
 
     output uart_tx,
     input uart_rx
@@ -25,8 +26,8 @@ module uart_ctrl#(
 localparam REG_UART_DATA        = 16'h0000;
 localparam REG_UART_STATUS      = 16'h0004;
 
-logic [7:0] uart_send_data;
-logic uart_send_data_ready = 1'b0;
+logic [7:0] uart_send_data, uart_recv_data, uart_recv_data_latched = 8'h00;
+logic uart_send_data_ready = 1'b0, uart_recv_data_ready;
 logic receive_ready;
 
 always_comb begin
@@ -49,6 +50,18 @@ uart_send(
     .receive_ready(receive_ready)
 );
 
+uart_recv#(.ClockDivider(ClockDivider))
+uart_recv(
+    .clock(clock),
+    .input_bit(uart_rx),
+
+    .data_out(uart_recv_data),
+    .data_ready(uart_recv_data_ready),
+
+    .break_received(),
+    .error()
+);
+
 always_ff@(posedge clock) begin
     uart_send_data_ready <= 1'b0;
     rsp_valid_o <= 1'b0;
@@ -68,10 +81,19 @@ always_ff@(posedge clock) begin
             rsp_valid_o <= 1'b1;
             // Read
             case( req_addr_i )
-                REG_UART_STATUS: rsp_data_o <= { {31{1'b0}}, intr_send_ready_o };
+                REG_UART_DATA: begin
+                    rsp_data_o <= {~intr_recv_ready_o, 23'h0, uart_recv_data_latched};
+                    intr_recv_ready_o <= 1'b0;
+                end
+                REG_UART_STATUS: rsp_data_o <= { {30{1'b0}}, intr_recv_ready_o, intr_send_ready_o };
                 default: rsp_data_o <= 32'hXXXXXXXX;
             endcase
         end
+    end
+
+    if( uart_recv_data_ready ) begin
+        uart_recv_data_latched <= uart_recv_data;
+        intr_recv_ready_o <= 1'b1;
     end
 end
 

@@ -29,7 +29,7 @@ Thread::Thread( Scheduler *scheduler, void *stack_top, ThreadStackAllocator::Ptr
 void Thread::threadTrampoline(Thread *self, Entrypoint functionEntry, void *param) {
     functionEntry(param);
 
-    self->_scheduler->stopThread( self );
+    self->_scheduler->stopThread();
 }
 
 void Thread::push(uint32_t value) {

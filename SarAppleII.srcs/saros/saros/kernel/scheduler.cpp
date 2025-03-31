@@ -19,6 +19,14 @@ extern "C"
 
 static constexpr size_t ThreadClassSizeInt = ( sizeof(Thread) + sizeof(uint32_t) - 1 ) / sizeof(uint32_t);
 
+Thread *getCurrentThread() {
+    Thread *current;
+
+    asm ("mv %0, tp": "=r"(current));
+
+    return current;
+}
+
 [[noreturn]] static void idleLoop(void *) noexcept {
     while(true)
         wfi();
@@ -30,9 +38,10 @@ void Scheduler::init( std::span<ThreadStack> stackArea ) {
 
     Thread *idleThread = createThread( idleLoop, nullptr, false );
 
+    // There's no need to lock, as interrupts have not yet been enabled
     idleThread->_listHook.unlink();
-    idleThread->priority = 2;   // The only thread with priority 2
-    _readyThreads[idleThread->priority].push_back(*idleThread);
+    idleThread->_priority = 2;   // The only thread with priority 2
+    _readyThreads[idleThread->_priority].push_back(*idleThread);
 }
 
 Thread *Scheduler::createThread( Entrypoint function, void *param, bool highPriority ) {
@@ -44,30 +53,50 @@ Thread *Scheduler::createThread( Entrypoint function, void *param, bool highPrio
     Thread *thread = new (stackTop) Thread(this, stackTop, std::move(newStack), function, param);
 
     if( highPriority )
-        thread->priority = 0;
+        thread->_priority = 0;
     else
-        thread->priority = 1;
+        thread->_priority = 1;
 
     thread->setState(Thread::State::Ready);
-    _readyThreads[thread->priority].push_back(*thread);
+    auto lock = saros.lock();   // RAII object auto-releases at function end
+    _readyThreads[thread->_priority].push_back(*thread);
 
     return thread;
 }
 
-void Scheduler::stopThread( Thread *thread ) {
-    abortWithMessage("stopThread called, system halted");
+void Scheduler::stopThread() {
+    auto locker = saros.lock();
+
+    Thread *currentThread = getCurrentThread();
+    currentThread->_listHook.unlink();
+    currentThread->_state = Thread::State::Dead;
+    currentThread->~Thread();
+
+    asm volatile("csrr sp, mscratch; mv tp, zero");
+    rescheduleImpl();
 }
 
 void Scheduler::run( Thread *thread ) {
     switchIn( thread );
 }
 
-Thread *getCurrentThread() {
-    Thread *current;
+void Scheduler::sleepOn( ThreadQueue &queue ) {
+    Thread *currentThread = getCurrentThread();
 
-    asm ("mv %0, tp": "=r"(current));
+    assertWithMessage( currentThread->getState() == Thread::State::Ready, "Running thread is not in state Ready" );
+    currentThread->_listHook.unlink();
+    currentThread->setState( Thread::State::Sleeping );
+    queue.push_back( *currentThread );
 
-    return current;
+    switchOutCoop();
+}
+
+void Scheduler::schedule( Thread *thread ) {
+    assertWithMessage( thread->getState() != Thread::State::Ready, "Trying to schedule a thread that is already Ready" );
+
+    thread->_listHook.unlink();
+    thread->setState( Thread::State::Ready );
+    _readyThreads[thread->_priority].push_back( *thread );
 }
 
 [[noreturn]] void Scheduler::reschedule() {
@@ -77,8 +106,8 @@ Thread *getCurrentThread() {
 [[noreturn]] void Scheduler::rescheduleImpl() {
     Thread *current = getCurrentThread();
 
-    if( current->getState() == Thread::State::Ready ) {
-        for( unsigned i = 0; i < current->priority; ++i ) {
+    if( current!=nullptr && current->getState() == Thread::State::Ready ) {
+        for( unsigned i = 0; i < current->_priority; ++i ) {
             if( !_readyThreads[i].empty() ) {
                 switchIn( &_readyThreads[i].front() );
             }

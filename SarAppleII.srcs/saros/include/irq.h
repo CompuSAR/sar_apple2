@@ -17,8 +17,12 @@ void reset_timer_cycles();
 #ifdef SAROS
 
 static constexpr uint32_t IrqExt__UartTxReady = 0x00000001;
+static constexpr uint32_t IrqExt__UartRxReady = 0x00000002;
 
 void irq_external_mask( uint32_t mask );
 void irq_external_unmask( uint32_t mask );
+
+extern "C"
+[[noreturn]] void trap_handler();
 
 #endif

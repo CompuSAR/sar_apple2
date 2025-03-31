@@ -165,7 +165,8 @@ logic           ctrl_timer_interrupt;
 logic           ctrl_ext_interrupt;
 logic           ctrl_software_interrupt;
 logic [31:0]    irq_lines;
-localparam UART_IRQ = 0;
+localparam UART_SEND_IRQ = 0;
+localparam UART_RECV_IRQ = 1;
 
 logic [31:0]    iob_ddr_read_data;
 
@@ -562,7 +563,8 @@ uart_ctrl#(.ClockDivider(CTRL_CLOCK_HZ / UART_BAUD), .SimMode(SIM_MODE)) uart_ct
     .rsp_valid_o(uart_rsp_valid),
     .rsp_data_o(uart_rsp_data),
 
-    .intr_send_ready_o(irq_lines[UART_IRQ]),
+    .intr_send_ready_o(irq_lines[UART_SEND_IRQ]),
+    .intr_recv_ready_o(irq_lines[UART_RECV_IRQ]),
 
     .uart_tx(uart_tx),
     .uart_rx(uart_rx)

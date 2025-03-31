@@ -1,8 +1,11 @@
 #include <abort.h>
 
-#include <csr.h>
+#include <saros/csr.h>
+
 #include <irq.h>
 #include <uart.h>
+
+using namespace Saros;
 
 void abortWithMessage( const char *message ) {
     // Disable interrupts
