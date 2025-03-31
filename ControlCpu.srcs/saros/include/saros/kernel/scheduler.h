@@ -2,6 +2,8 @@
 
 #include <saros/kernel/thread.h>
 
+#include <irq.h>
+
 #include <optional>
 
 namespace Saros::Kernel {
@@ -9,6 +11,7 @@ namespace Saros::Kernel {
 class Scheduler {
     static constexpr size_t NumPriorities = 3; // High, normal and idle
     friend Thread;
+    friend void ::trap_handler();
 
     static constexpr size_t MaxNumThreads = 256;
 
@@ -28,14 +31,15 @@ public:
 
     void run( Thread *thread );
 
-
+    void sleepOn( ThreadQueue &queue );
+    void schedule( Thread *thread );
 private:
     // Methods to be called by Thread
-    [[noreturn]] void stopThread( Thread *thread );
+    [[noreturn]] void stopThread();
 
     // Static method called by context switch
     [[noreturn]] static void reschedule();
     [[noreturn]] void rescheduleImpl();
 };
 
-} // namespace saros::kernel
+} // namespace Saros::Kernel

@@ -2,6 +2,8 @@
 
 #include <stdint.h>
 
+namespace Saros {
+
 enum class CSR {
     mvendorid = 0xf11,
     marchid = 0xf12,
@@ -91,3 +93,5 @@ uint32_t csr_read_clr_bits(uint32_t value) {
 
     return result;
 }
+
+} // namespace Saros

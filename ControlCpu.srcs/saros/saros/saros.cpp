@@ -1,7 +1,9 @@
 #include <saros/saros.h>
 
-#include <csr.h>
+#include <saros/csr.h>
+
 #include <irq.h>
+#include <uart.h>
 
 #include <span>
 
@@ -17,8 +19,35 @@ void Saros::run( Kernel::Entrypoint startupThreadFunction, void *threadParam ) {
     Kernel::Thread *thread = _scheduler.createThread( startupThreadFunction, threadParam );
 
     initIrq();
+    uartInit();
 
+    _running = true;
     _scheduler.run( thread );
+}
+
+void Saros::sleepOn( Kernel::Scheduler::ThreadQueue &queue ) {
+    auto locker = lock();
+
+    _scheduler.sleepOn( queue );
+}
+
+void Saros::wakeOneThread( Kernel::Scheduler::ThreadQueue &queue ) {
+    auto locker = lock();
+
+    if( !queue.empty() ) {
+        Kernel::Thread *thread = &queue.front();
+        _scheduler.schedule( thread );
+        queue.pop_front();
+    }
+}
+
+void Saros::wakeAllThreads( Kernel::Scheduler::ThreadQueue &queue ) {
+    auto locker = lock();
+
+    while( !queue.empty() ) {
+        Kernel::Thread *thread = &queue.front();
+        _scheduler.schedule( thread ); // Scheduler::schedule will unlink it from the list
+    }
 }
 
 namespace {

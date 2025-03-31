@@ -2,15 +2,23 @@
 
 #include <saros/kernel/scheduler.h>
 #include <saros/kernel/thread.h>
+#include <saros/spin_lock.h>
+
+#include <mutex>
 
 namespace Saros {
 
 class Saros {
     Kernel::Scheduler _scheduler;
+    // One big spin lock
+    SpinLock _bigLock;
+    bool _running = false;
 
     friend Kernel::Scheduler;
 
 public:
+    using Entrypoint = Kernel::Entrypoint;
+
     Saros() = default;
 
     Saros(const Saros &) = delete;
@@ -18,6 +26,25 @@ public:
 
     void init( std::span<Kernel::ThreadStack> stackArea );
     void run( Kernel::Entrypoint startupThreadFunction, void *param );
+
+    void createThread( Entrypoint function, void *param, bool highPriority = false ) {
+        _scheduler.createThread( function, param, highPriority );
+    }
+
+    [[nodiscard]] std::unique_lock<SpinLock> lock() {
+        return std::unique_lock(_bigLock);
+    }
+
+    [[nodiscard]] bool isRunning() const {
+        return _running;
+    }
+
+    // Send the current thread to sleep on the specific queue
+    void sleepOn( Kernel::Scheduler::ThreadQueue &queue );
+    // Wake one thread from the wait list
+    void wakeOneThread( Kernel::Scheduler::ThreadQueue &queue );
+    // Wake all threads on the list
+    void wakeAllThreads( Kernel::Scheduler::ThreadQueue &queue );
 
 private:
     void initIrq();

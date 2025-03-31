@@ -1,4 +1,6 @@
-#include "csr.h"
+#include <saros/kernel/scheduler.h>
+#include <saros/csr.h>
+
 #include "format.h"
 #include "irq.h"
 #include "memory.h"
@@ -17,6 +19,9 @@
 #define REG_ACTIVE_IRQS         0x0400
 #define REG_IRQ_MASK_SET        0x0500
 #define REG_IRQ_MASK_CLEAR      0x0580
+
+
+using namespace Saros;
 
 void sleep_ns(uint64_t nanoseconds) {
     sleep_cycles(nanoseconds*reg_read_32(DEVICE_NUM, REG_CPU_CLOCK_FREQ) / 1'000'000'000);
@@ -65,9 +70,6 @@ void halt() {
     }
 }
 
-extern "C"
-void trap_handler_entry();
-
 static void handle_software_interrupt() {
     // TODO implement
 }
@@ -81,10 +83,12 @@ static void handle_external_interrupt() {
 
     if( (active_irqs & IrqExt__UartTxReady) != 0 )
         handle_uart_tx_ready_irq();
+    if( (active_irqs & IrqExt__UartRxReady) != 0 )
+        handle_uart_rx_ready_irq();
 }
 
 extern "C"
-void trap_handler() {
+[[noreturn]] void trap_handler() {
     uint32_t cause = csr_read<CSR::mcause>();
 
     if( cause & 0x80000000 ) {
@@ -110,6 +114,8 @@ void trap_handler() {
 
         halt();
     }
+
+    Saros::Kernel::Scheduler::reschedule();
 }
 
 void irq_external_mask( uint32_t mask ) {

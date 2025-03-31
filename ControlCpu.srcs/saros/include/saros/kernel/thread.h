@@ -25,9 +25,9 @@ class Thread {
     ThreadStackAllocator::Ptr _stack;
     Scheduler *_scheduler;
     boost::intrusive::list_member_hook< boost::intrusive::link_mode<boost::intrusive::auto_unlink> > _listHook;
-    enum class State { Ready, Waiting, Idle } _state = State::Idle;
+    enum class State { Ready, Sleeping, Dead } _state = State::Dead;
 
-    unsigned priority = 1;
+    unsigned _priority = 1;
 
     friend Scheduler;
 public:
