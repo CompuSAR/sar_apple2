@@ -94,7 +94,7 @@ uint32_t uart_recv_char() {
     }
 
     uint32_t ret = uartRxBuffer.consume();
-    irq_external_unmask( IrqExt__UartTxReady ); 
+    irq_external_unmask( IrqExt__UartRxReady );
 
     return ret;
 }
@@ -102,4 +102,5 @@ uint32_t uart_recv_char() {
 void uartInit() {
     uartTxReady.set();
     uartRxReady.set();
+    irq_external_unmask( IrqExt__UartRxReady );
 }
