@@ -6,7 +6,7 @@ namespace Saros::Sync {
 
 class Event {
     Kernel::ThreadQueue _threadQueue;
-    bool _active = false;
+    volatile bool _active = false;
 
 public:
     Event() = default;

@@ -44,7 +44,7 @@ void handle_uart_tx_ready_irq() {
 }
 
 void handle_uart_rx_ready_irq() {
-    while( uart_tx_ready() && !uartRxBuffer.isFull() )
+    while( uart_rx_ready() && !uartRxBuffer.isFull() )
         uartRxBuffer.produce( reg_read_32( DeviceNum, RegUartData ) );
 
     uartRxReady.set();
@@ -90,6 +90,7 @@ void uart_send(const char *str) {
 
 uint32_t uart_recv_char() {
     while( uartRxBuffer.isEmpty() ) {
+        uartRxReady.clear();
         uartRxReady.wait();
     }
 

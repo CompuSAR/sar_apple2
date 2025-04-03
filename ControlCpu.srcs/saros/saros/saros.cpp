@@ -26,13 +26,11 @@ void Saros::run( Kernel::Entrypoint startupThreadFunction, void *threadParam ) {
 }
 
 void Saros::sleepOn( Kernel::Scheduler::ThreadQueue &queue ) {
-    auto locker = lock();
-
     _scheduler.sleepOn( queue );
 }
 
 void Saros::wakeOneThread( Kernel::Scheduler::ThreadQueue &queue ) {
-    auto locker = lock();
+    SpinLock locker{true};
 
     if( !queue.empty() ) {
         Kernel::Thread *thread = &queue.front();
@@ -42,7 +40,7 @@ void Saros::wakeOneThread( Kernel::Scheduler::ThreadQueue &queue ) {
 }
 
 void Saros::wakeAllThreads( Kernel::Scheduler::ThreadQueue &queue ) {
-    auto locker = lock();
+    SpinLock locker{true};
 
     while( !queue.empty() ) {
         Kernel::Thread *thread = &queue.front();

@@ -82,12 +82,15 @@ typedef enum logic[3:0] {
 } DdrCmd;
 DdrCmd ddr_cmd;
 
-uart_send#(.ClockDivider(10)) sender(.clock(clock), .data_in(8'h41), .data_in_ready(1'b1), .out_bit(uart_in), .receive_ready(uart_send_ready));
+uart_send#(.ClockDivider(10)) sender(.clock(clock), .data_in(8'h41), .data_in_ready(uart_send_valid), .out_bit(uart_in), .receive_ready(uart_send_ready));
 
 always_comb
     $cast( ddr_cmd, {1'b0 ,top_module.ddr3_ras_n ,top_module.ddr3_cas_n ,top_module.ddr3_we_n} );
 
-logic [63:0] cycles_counter = 0;
+initial begin
+    #11000000 uart_send_valid = 1'b1;
+    #100 uart_send_valid = 1'b0;
+end
 
 /*
 ddr3 ddr(
