@@ -58,14 +58,14 @@ Thread *Scheduler::createThread( Entrypoint function, void *param, bool highPrio
         thread->_priority = 1;
 
     thread->setState(Thread::State::Ready);
-    auto lock = saros.lock();   // RAII object auto-releases at function end
+    SpinLock lock{true};   // RAII object auto-releases at function end
     _readyThreads[thread->_priority].push_back(*thread);
 
     return thread;
 }
 
 void Scheduler::stopThread() {
-    auto locker = saros.lock();
+    SpinLock locker{true};
 
     Thread *currentThread = getCurrentThread();
     currentThread->_listHook.unlink();
@@ -81,6 +81,8 @@ void Scheduler::run( Thread *thread ) {
 }
 
 void Scheduler::sleepOn( ThreadQueue &queue ) {
+    csr_read_clr_bits<CSR::mstatus>( MSTATUS__MIE );
+
     Thread *currentThread = getCurrentThread();
 
     assertWithMessage( currentThread->getState() == Thread::State::Ready, "Running thread is not in state Ready" );

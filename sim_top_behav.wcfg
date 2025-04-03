@@ -12,20 +12,19 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="11,002,037.877 ns"></ZoomStartTime>
-      <ZoomEndTime time="11,002,240.278 ns"></ZoomEndTime>
-      <Cursor1Time time="11,002,253.711 ns"></Cursor1Time>
+      <ZoomStartTime time="10,984.619621 us"></ZoomStartTime>
+      <ZoomEndTime time="11,028.139622 us"></ZoomEndTime>
+      <Cursor1Time time="11,012.955567 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="196"></NameColumnWidth>
-      <ValueColumnWidth column_width="185"></ValueColumnWidth>
+      <ValueColumnWidth column_width="173"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="40" />
+   <WVObjectSize size="46" />
    <wave_markers>
-      <marker label="" time="10699896597" />
-      <marker label="" time="10708249587" />
-      <marker label="" time="11000643814" />
-      <marker label="" time="11000960515" />
+      <marker label="" time="11020807113" />
+      <marker label="" time="11001810000" />
+      <marker label="" time="11011873505" />
    </wave_markers>
    <wvobject type="array" fp_name="/sim_top/top_module/debug">
       <obj_property name="ElementShortName">debug[3:0]</obj_property>
@@ -67,6 +66,8 @@
    <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/iBus_cmd_payload_pc">
       <obj_property name="ElementShortName">iBus_cmd_payload_pc[31:0]</obj_property>
       <obj_property name="ObjectShortName">iBus_cmd_payload_pc[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#0000FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/iBus_rsp_valid">
       <obj_property name="ElementShortName">iBus_rsp_valid</obj_property>
@@ -79,6 +80,42 @@
    <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/iBus_rsp_payload_inst">
       <obj_property name="ElementShortName">iBus_rsp_payload_inst[31:0]</obj_property>
       <obj_property name="ObjectShortName">iBus_rsp_payload_inst[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/CsrPlugin_mstatus_MIE">
+      <obj_property name="ElementShortName">CsrPlugin_mstatus_MIE</obj_property>
+      <obj_property name="ObjectShortName">CsrPlugin_mstatus_MIE</obj_property>
+      <obj_property name="CustomSignalColor">#E0FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/CsrPlugin_mstatus_MPIE">
+      <obj_property name="ElementShortName">CsrPlugin_mstatus_MPIE</obj_property>
+      <obj_property name="ObjectShortName">CsrPlugin_mstatus_MPIE</obj_property>
+      <obj_property name="CustomSignalColor">#E0FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/RegFilePlugin_regFile[1]">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[1][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[1][31:0]</obj_property>
+      <obj_property name="label">Return address</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/RegFilePlugin_regFile[2]">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[2][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[2][31:0]</obj_property>
+      <obj_property name="label">Stack pointer</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/RegFilePlugin_regFile[4]">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[4][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[4][31:0]</obj_property>
+      <obj_property name="label">Thread</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/control_cpu/RegFilePlugin_regFile[10]">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[10][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[10][31:0]</obj_property>
+      <obj_property name="label">Reg A0</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/sim_top/top_module/control_cpu/dBus_cmd_valid">
       <obj_property name="ElementShortName">dBus_cmd_valid</obj_property>

@@ -6,8 +6,8 @@
 
 template <typename T, size_t BufferSize = 1024>
 class P1C1 {
-    T _buffer[BufferSize];
-    unsigned _producerIndex = 0, _consumerIndex = 0;
+    volatile T _buffer[BufferSize];
+    volatile unsigned _producerIndex = 0, _consumerIndex = 0;
 
 public:
 

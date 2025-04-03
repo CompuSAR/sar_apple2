@@ -10,8 +10,6 @@ namespace Saros {
 
 class Saros {
     Kernel::Scheduler _scheduler;
-    // One big spin lock
-    SpinLock _bigLock;
     bool _running = false;
 
     friend Kernel::Scheduler;
@@ -29,10 +27,6 @@ public:
 
     void createThread( Entrypoint function, void *param, bool highPriority = false ) {
         _scheduler.createThread( function, param, highPriority );
-    }
-
-    [[nodiscard]] std::unique_lock<SpinLock> lock() {
-        return std::unique_lock(_bigLock);
     }
 
     [[nodiscard]] bool isRunning() const {

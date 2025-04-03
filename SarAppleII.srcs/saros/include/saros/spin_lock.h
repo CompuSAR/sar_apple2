@@ -9,10 +9,15 @@ class SpinLock {
 
 public:
     SpinLock() = default;
+    explicit SpinLock( bool locked ) : SpinLock() {
+        if( locked )
+            lock();
+    }
+
     SpinLock( const SpinLock & ) = delete;
     SpinLock &operator=( const SpinLock & ) = delete;
 
-    ~SpinLock() { assertWithMessage( !_locked, "SpinLock destroyed while held" ); }
+    ~SpinLock() { if( _locked ) unlock(); }
 
     void lock() {
         assertWithMessage( !_locked, "SpinLock::lock called while already held" );
