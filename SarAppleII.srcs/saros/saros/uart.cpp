@@ -71,17 +71,12 @@ void uart_send(char c) {
         while( uartTxBuffer.isFull() )
             wfi();
 
-        if( c=='\n' )
-            uartTxBuffer.produce(c);
-
         uartTxBuffer.produce(c);
 
         wwb();
 
         irq_external_unmask( IrqExt__UartTxReady );
     } else {
-        if( c=='\n' )
-            uart_send_raw('\r');
         uart_send_raw(c);
     }
 }

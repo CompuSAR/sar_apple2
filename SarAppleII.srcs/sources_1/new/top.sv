@@ -497,7 +497,8 @@ timer_int_ctrl#(.CLOCK_HZ(CTRL_CLOCK_HZ)) interrupt_controller(
     .irqs_i(irq_lines),
 
     .ctrl_timer_interrupt_o(ctrl_timer_interrupt),
-    .ctrl_ext_interrupt_o(ctrl_ext_interrupt)
+    .ctrl_ext_interrupt_o(ctrl_ext_interrupt),
+    .ctrl_software_interrupt_i(ctrl_software_interrupt)
 );
 
 wire [31:0]gp_out[GPIO_OUT_PORTS];
