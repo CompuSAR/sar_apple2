@@ -11,12 +11,13 @@ set_property IOSTANDARD LVCMOS33 [get_ports {leds[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {leds[0]}]
 
 set_property PACKAGE_PIN M13 [get_ports {debug[0]}]
-set_property PACKAGE_PIN L12 [get_ports {debug[1]}]
+#set_property PACKAGE_PIN L12 [get_ports {debug[1]}]
+set_property PACKAGE_PIN F13 [get_ports {debug[1]}]
 set_property PACKAGE_PIN K11 [get_ports {debug[2]}]
 set_property PACKAGE_PIN J13 [get_ports {debug[3]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {debug}]
 
-set_property PACKAGE_PIN P10 [get_ports uart_rx]
+set_property PACKAGE_PIN L12 [get_ports uart_rx]
 set_property IOSTANDARD LVCMOS33 [get_ports uart_rx]
 
 set_property PACKAGE_PIN N10 [get_ports uart_tx]
