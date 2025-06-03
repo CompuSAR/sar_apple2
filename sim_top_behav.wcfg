@@ -12,19 +12,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="7,900,683.590 ns"></ZoomStartTime>
-      <ZoomEndTime time="7,902,581.591 ns"></ZoomEndTime>
-      <Cursor1Time time="7,902,265.257 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="3,634.848 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="220"></NameColumnWidth>
-      <ValueColumnWidth column_width="257"></ValueColumnWidth>
+      <ValueColumnWidth column_width="245"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="102" />
-   <wave_markers>
-      <marker label="" time="7883368762" />
-      <marker label="" time="7886562164" />
-   </wave_markers>
+   <WVObjectSize size="105" />
    <wvobject type="array" fp_name="/sim_top/top_module/debug">
       <obj_property name="ElementShortName">debug[3:0]</obj_property>
       <obj_property name="ObjectShortName">debug[3:0]</obj_property>
@@ -172,6 +168,66 @@
       <obj_property name="ElementShortName">dBus_rsp_data[31:0]</obj_property>
       <obj_property name="ObjectShortName">dBus_rsp_data[31:0]</obj_property>
    </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/spi_flash_cs">
+      <obj_property name="ElementShortName">spi_flash_cs</obj_property>
+      <obj_property name="ObjectShortName">spi_flash_cs</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/spi_flash_clock">
+      <obj_property name="ElementShortName">spi_flash_clock</obj_property>
+      <obj_property name="ObjectShortName">spi_flash_clock</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/spi_flash_dq">
+      <obj_property name="ElementShortName">spi_flash_dq[3:0]</obj_property>
+      <obj_property name="ObjectShortName">spi_flash_dq[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/apple_cpu/reset_i">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">reset_i</obj_property>
+      <obj_property name="ObjectShortName">reset_i</obj_property>
+      <obj_property name="label">6502_reset</obj_property>
+      <obj_property name="CustomSignalColor">#0000A0</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/uart_ctrl/uart_recv/data_out">
+      <obj_property name="ElementShortName">data_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/uart_recv/data_ready">
+      <obj_property name="ElementShortName">data_ready</obj_property>
+      <obj_property name="ObjectShortName">data_ready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/uart_recv/break_received">
+      <obj_property name="ElementShortName">break_received</obj_property>
+      <obj_property name="ObjectShortName">break_received</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/uart_recv/error">
+      <obj_property name="ElementShortName">error</obj_property>
+      <obj_property name="ObjectShortName">error</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/intr_send_ready_o">
+      <obj_property name="ElementShortName">intr_send_ready_o</obj_property>
+      <obj_property name="ObjectShortName">intr_send_ready_o</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/intr_recv_ready_o">
+      <obj_property name="ElementShortName">intr_recv_ready_o</obj_property>
+      <obj_property name="ObjectShortName">intr_recv_ready_o</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/interrupt_controller/irq_active">
+      <obj_property name="ElementShortName">irq_active[31:0]</obj_property>
+      <obj_property name="ObjectShortName">irq_active[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/interrupt_controller/irq_masked">
+      <obj_property name="ElementShortName">irq_masked[31:0]</obj_property>
+      <obj_property name="ObjectShortName">irq_masked[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/interrupt_controller/wait_cycle">
+      <obj_property name="ElementShortName">wait_cycle[63:0]</obj_property>
+      <obj_property name="ObjectShortName">wait_cycle[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/interrupt_controller/wait_expired">
+      <obj_property name="ElementShortName">wait_expired</obj_property>
+      <obj_property name="ObjectShortName">wait_expired</obj_property>
+   </wvobject>
    <wvobject type="array" fp_name="/sim_top/top_module/cache/active_command">
       <obj_property name="ElementShortName">active_command</obj_property>
       <obj_property name="ObjectShortName">active_command</obj_property>
@@ -227,19 +283,6 @@
    <wvobject type="array" fp_name="/sim_top/top_module/cache/md_rd_dout">
       <obj_property name="ElementShortName">md_rd_dout</obj_property>
       <obj_property name="ObjectShortName">md_rd_dout</obj_property>
-      <wvobject type="logic" fp_name="/sim_top/top_module/cache/md_rd_dout.initialized">
-         <obj_property name="ElementShortName">.initialized</obj_property>
-         <obj_property name="ObjectShortName">.initialized</obj_property>
-      </wvobject>
-      <wvobject type="logic" fp_name="/sim_top/top_module/cache/md_rd_dout.dirty">
-         <obj_property name="ElementShortName">.dirty</obj_property>
-         <obj_property name="ObjectShortName">.dirty</obj_property>
-      </wvobject>
-      <wvobject type="array" fp_name="/sim_top/top_module/cache/md_rd_dout.source_address">
-         <obj_property name="ElementShortName">.source_address[13:0]</obj_property>
-         <obj_property name="ObjectShortName">.source_address[13:0]</obj_property>
-         <obj_property name="Radix">HEXRADIX</obj_property>
-      </wvobject>
    </wvobject>
    <wvobject type="array" fp_name="/sim_top/top_module/cache/result_selector/mask">
       <obj_property name="ElementShortName">mask[15:0]</obj_property>
@@ -293,61 +336,13 @@
       <obj_property name="CustomSignalColor">#FFFF00</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/spi_flash_cs">
-      <obj_property name="ElementShortName">spi_flash_cs</obj_property>
-      <obj_property name="ObjectShortName">spi_flash_cs</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/spi_flash_clock">
-      <obj_property name="ElementShortName">spi_flash_clock</obj_property>
-      <obj_property name="ObjectShortName">spi_flash_clock</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/spi_flash_dq">
-      <obj_property name="ElementShortName">spi_flash_dq[3:0]</obj_property>
-      <obj_property name="ObjectShortName">spi_flash_dq[3:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/apple_cpu/reset_i">
-      <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="ElementShortName">reset_i</obj_property>
-      <obj_property name="ObjectShortName">reset_i</obj_property>
-      <obj_property name="label">6502_reset</obj_property>
-      <obj_property name="CustomSignalColor">#0000A0</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/uart_ctrl/uart_recv/data_out">
-      <obj_property name="ElementShortName">data_out[7:0]</obj_property>
-      <obj_property name="ObjectShortName">data_out[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/uart_recv/data_ready">
-      <obj_property name="ElementShortName">data_ready</obj_property>
-      <obj_property name="ObjectShortName">data_ready</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/uart_recv/break_received">
-      <obj_property name="ElementShortName">break_received</obj_property>
-      <obj_property name="ObjectShortName">break_received</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/uart_recv/error">
-      <obj_property name="ElementShortName">error</obj_property>
-      <obj_property name="ObjectShortName">error</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/intr_send_ready_o">
-      <obj_property name="ElementShortName">intr_send_ready_o</obj_property>
-      <obj_property name="ObjectShortName">intr_send_ready_o</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/sim_top/top_module/uart_ctrl/intr_recv_ready_o">
-      <obj_property name="ElementShortName">intr_recv_ready_o</obj_property>
-      <obj_property name="ObjectShortName">intr_recv_ready_o</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/interrupt_controller/irq_active">
-      <obj_property name="ElementShortName">irq_active[31:0]</obj_property>
-      <obj_property name="ObjectShortName">irq_active[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/sim_top/top_module/interrupt_controller/irq_masked">
-      <obj_property name="ElementShortName">irq_masked[31:0]</obj_property>
-      <obj_property name="ObjectShortName">irq_masked[31:0]</obj_property>
-   </wvobject>
    <wvobject type="logic" fp_name="/sim_top/top_module/interrupt_controller/ctrl_timer_interrupt_o">
       <obj_property name="ElementShortName">ctrl_timer_interrupt_o</obj_property>
       <obj_property name="ObjectShortName">ctrl_timer_interrupt_o</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/interrupt_controller/cycles_counter">
+      <obj_property name="ElementShortName">cycles_counter[63:0]</obj_property>
+      <obj_property name="ObjectShortName">cycles_counter[63:0]</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/sim_top/top_module/interrupt_controller/ctrl_ext_interrupt_o">
       <obj_property name="ElementShortName">ctrl_ext_interrupt_o</obj_property>

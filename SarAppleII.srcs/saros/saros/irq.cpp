@@ -15,6 +15,7 @@
 #define REG_WAIT_COUNT          0x0010
 #define REG_INT_CYCLE           0x0200
 #define REG_RESET_INT_CYCLE     0x0210
+#define REG_RESET_WAIT_CYCLE    0x0214
 
 #define REG_ACTIVE_IRQS         0x0400
 #define REG_IRQ_MASK_SET        0x0500
@@ -60,6 +61,7 @@ uint64_t get_cycles_count() {
 }
 
 void wfi() {
+    reg_write_32(DEVICE_NUM, REG_RESET_WAIT_CYCLE, 0);
     reg_read_32(DEVICE_NUM, REG_HALT);
 }
 
@@ -72,6 +74,7 @@ void halt() {
 
 static void handleTimerInterrupt() {
     // TODO implement
+    reset_timer_cycles();
 }
 
 static void handleExternalInterrupt() {

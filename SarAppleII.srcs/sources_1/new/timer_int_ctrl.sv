@@ -185,6 +185,8 @@ always_comb begin
                     interrupt_cycle_high_latch_next = req_data_i;
                 16'h0210: // Reset timer interrupt
                     interrupt_cycle_next = TIMER_INT_DISABLED64;
+                16'h0214: // Reset wait cycles
+                    wait_cycle_next = TIMER_INT_DISABLED64;
                 16'h0500: // Set bits in IRQ mask
                     irq_masked_next = irq_masked | req_data_i;
                 16'h0580: // Clear bits in IRQ mask
