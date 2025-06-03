@@ -36,6 +36,8 @@ void Scheduler::init( std::span<ThreadStack> stackArea ) {
     assertWithMessage( ! _threadStackAllocator.has_value(), "Saros::Scheduler::init called twice" );
     _threadStackAllocator.emplace( stackArea );
 
+    // Reset any waiting counters
+    reset_timer_cycles();
     Thread *idleThread = createThread( idleLoop, nullptr, false );
 
     // There's no need to lock, as interrupts have not yet been enabled
