@@ -49,7 +49,14 @@ localparam ADDR_CACHELINE_ADDR_HIGH = ADDR_CACHELINE_ADDR_LOW + LINES_ADDR_BITS 
 localparam ADDR_COMPLEMENTARY_LOW = ADDR_CACHELINE_ADDR_HIGH + 1;
 localparam ADDR_COMPLEMENTARY_HIGH = $clog2(BACKEND_SIZE_BYTES) - 1;
 
+wire [ADDR_CACHELINE_ADDR_HIGH:ADDR_CACHELINE_ADDR_LOW] scramble[ADDR_COMPLEMENTARY_HIGH:ADDR_COMPLEMENTARY_LOW];
 function logic[ADDR_CACHELINE_ADDR_HIGH:ADDR_CACHELINE_ADDR_LOW] extract_cacheline_addr(input [ADDR_BITS-1:0] address);
+    int i;
+
+    for( i=ADDR_COMPLEMENTARY_LOW; i<=ADDR_COMPLEMENTARY_HIGH; ++i )
+        if( address[i] )
+            address[ADDR_CACHELINE_ADDR_HIGH:ADDR_CACHELINE_ADDR_LOW] ^= scramble[i];
+
     extract_cacheline_addr = address[ADDR_CACHELINE_ADDR_HIGH:ADDR_CACHELINE_ADDR_LOW];
 endfunction
 
@@ -216,6 +223,16 @@ generate
         assign port_state[i].next_active = port_state[i+1].active_port;
     end
 endgenerate
+
+wire [31:0] RAND[ADDR_COMPLEMENTARY_HIGH:ADDR_COMPLEMENTARY_LOW];
+generate
+    localparam SEED = 32'h271a126b;
+    for ( i=ADDR_COMPLEMENTARY_LOW; i<=ADDR_COMPLEMENTARY_HIGH; ++i ) begin : scrambler
+        assign RAND[i] = i==ADDR_COMPLEMENTARY_LOW ? SEED : RAND[i-1] * 32'h3fc3577b;
+        assign scramble[i] = RAND[i][ADDR_CACHELINE_ADDR_HIGH:ADDR_CACHELINE_ADDR_LOW];
+    end : scrambler
+endgenerate
+
 
 wire [$clog2(NUM_PORTS)-1:0] active_port = port_state[0].active_port;
 
