@@ -7,8 +7,9 @@ SCRIPTS_PATH=$(top_srcdir)/../../scripts
 
 noinst_PROGRAMS=saros.mcs saros.mem
 
+OFFSET=400000
 saros.mcs$(EXEEXT): saros/saros.bin
-	$(SCRIPTS_PATH)/make_hex.py "" "$<" > "$@".tmp
+	$(SCRIPTS_PATH)/make_hex.py --offset 0x$(OFFSET) "" "$<" > "$@".tmp
 	mv "$@".tmp "$@"
 
 saros/saros.bin:
@@ -17,6 +18,6 @@ saros/saros.bin:
 .PHONY: saros/saros.bin
 
 saros.mem$(EXEEXT): saros/saros.bin
-	echo "@200000" > "$@.tmp"
+	echo "@$(OFFSET)" > "$@.tmp"
 	hexdump -ve '16/1 "%02X " "\n"' "$<" >> "$@.tmp"
 	mv "$@.tmp" "$@"
