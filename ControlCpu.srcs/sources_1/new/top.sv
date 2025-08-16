@@ -26,7 +26,7 @@ module top
     input nReset,
     input enable_uart_output,
 
-    output [1:0] leds,
+    output leds[4],
 
     output logic[3:0] debug,
 
@@ -45,7 +45,7 @@ module top
     output  wire    [0:0]   ddr3_cke,
     output  wire    [0:0]   ddr3_ck_p,
     output  wire    [0:0]   ddr3_ck_n,
-    //output  wire    [0:0]   ddr3_cs_n,
+    output  wire    [0:0]   ddr3_cs_n,
     output  wire            ddr3_ras_n,
     output  wire            ddr3_cas_n,
     output  wire            ddr3_we_n,
@@ -156,8 +156,8 @@ localparam UART_RECV_IRQ = 1;
 logic [31:0]    iob_ddr_read_data;
 
 
-assign leds[0] = !ctrl_timer_interrupt;
-assign leds[1] = ctrl_ext_interrupt;
+assign leds[0] = !nReset || !clocks_locked;
+//assign leds[1] = gp_out[0][GPOUT0_6502_RESET];
 
 VexRiscv control_cpu(
     .clk(ctrl_cpu_clock),
@@ -353,6 +353,20 @@ cache#(
     .backend_rsp_read_data_i(ddr_data_rsp_read_data)
 );
 
+logic leds_reg[4] = { 1'b1, 1'b1, 1'b1, 1'b1 };
+assign leds[1] = leds_reg[1];
+assign leds[2] = leds_reg[2];
+assign leds[3] = leds_reg[3];
+
+always_ff@(posedge ctrl_cpu_clock) begin
+    leds_reg[2] <= !ctrl_dBus_cmd_ready;
+
+    if( !leds_reg[1] && ctrl_dBus_rsp_valid )
+        leds_reg[1] <= 1'b1;
+    if( ctrl_dBus_cmd_valid && ctrl_dBus_cmd_ready && !ctrl_dBus_cmd_payload_wr )
+        leds_reg[1] <= 1'b0;
+end
+
 //-----------------------------------------------------------------
 // DDR Core + PHY
 //-----------------------------------------------------------------
@@ -445,12 +459,12 @@ sddr_phy_xilinx ddr_phy(
 
     ,.ddr3_ck_p_o(ddr3_ck_p)
     ,.ddr3_ck_n_o(ddr3_ck_n)
+    ,.ddr3_cs_n_o()
     ,.ddr3_cke_o(ddr3_cke)
     ,.ddr3_reset_n_o(ddr3_reset_n)
     ,.ddr3_ras_n_o(ddr3_ras_n)
     ,.ddr3_cas_n_o(ddr3_cas_n)
     ,.ddr3_we_n_o(ddr3_we_n)
-    ,.ddr3_cs_n_o()                     // No chip select in design
     ,.ddr3_ba_o(ddr3_ba)
     ,.ddr3_addr_o(ddr3_addr[13:0])
     ,.ddr3_odt_o(ddr3_odt)
@@ -459,6 +473,7 @@ sddr_phy_xilinx ddr_phy(
     ,.ddr3_dqs_p_io(ddr3_dqs_p)
     ,.ddr3_dqs_n_io(ddr3_dqs_n)
     );
+assign ddr3_cs_n = 1'b0;
 
 timer_int_ctrl#(.CLOCK_HZ(CTRL_CLOCK_HZ)) interrupt_controller(
     .clock(ctrl_cpu_clock),

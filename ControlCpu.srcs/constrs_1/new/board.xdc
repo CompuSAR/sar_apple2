@@ -5,10 +5,6 @@ set_property IOSTANDARD LVCMOS33 [get_ports board_clock]
 set_property PACKAGE_PIN F4 [get_ports nReset]
 set_property IOSTANDARD LVCMOS15 [get_ports nReset]
 
-set_property PACKAGE_PIN L14 [get_ports enable_uart_output]
-set_property IOSTANDARD LVCMOS33 [get_ports enable_uart_output]
-set_property PULLTYPE PULLUP [get_ports enable_uart_output]
-
 set_property PACKAGE_PIN E11 [get_ports {leds[1]}]
 set_property PACKAGE_PIN M10 [get_ports {leds[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {leds[1]}]
@@ -45,7 +41,7 @@ set_property CONFIG_MODE SPIx4 [current_design]
 set_property BITSTREAM.CONFIG.CONFIGRATE 50 [current_design]
 
 
-create_clock -period 3.299 -name VIRTUAL_ddr_clock -waveform {0.000 1.649}
+create_clock -period 3.265 -name VIRTUAL_ddr_clock -waveform {0.000 1.633}
 
 set_output_delay -clock [get_clocks board_clock] -max -add_delay -1.500 [get_ports {spi_dq[*]}]
 #set_output_delay -clock [get_clocks board_clock] -max -add_delay 1.750 [get_ports {spi_dq[*]}]

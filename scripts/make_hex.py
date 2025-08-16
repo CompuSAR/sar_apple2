@@ -67,6 +67,14 @@ parser.add_argument('--offset', action='store', default=2*1024*1024)
 
 args = parser.parse_args()
 
+if type(args.offset) == str:
+    if args.offset.lower().startswith("0x"):
+        args.offset = int(args.offset[2:], 16)
+    elif args.offset.startswith("0"):
+        args.offset = int(args.offset[1:], 8)
+    else:
+        args.offset = int(args.offset, 10)
+
 if args.FPGA_design:
     print("Including the FPGA design is not supported yet", file=sys.stderr)
     sys.exit(1)
