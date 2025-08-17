@@ -26,6 +26,7 @@ module top
     input nReset,
 
     output leds[4],
+    input switches[4],
 
     output logic[3:0] debug,
 
@@ -54,7 +55,10 @@ module top
     output  wire    [1:0]   ddr3_dm,
     inout   wire    [1:0]   ddr3_dqs_p,
     inout   wire    [1:0]   ddr3_dqs_n,
-    inout   wire    [15:0]  ddr3_dq
+    inout   wire    [15:0]  ddr3_dq,
+
+    output wire  [7:0] numeric_segments_n,
+    output wire  [5:0] numeric_enable_n
 );
 
 `ifdef SYNTHESIS
@@ -736,6 +740,22 @@ apple_display(
     .rsp_data_i(cache_port_rsp_read_data_n[CACHE_PORT_IDX_DISPLAY]),
 
     .uart_send_o(/*uart_tx*/ debug[0])
+);
+
+logic [31:0] last_pc = 0;
+always_ff@(posedge ctrl_cpu_clock) begin
+    if( inst_cache_port_cmd_valid_s[0] && inst_cache_port_cmd_ready_n[0] && !switches[0] ) begin
+        last_pc <= inst_cache_port_cmd_addr_s[0];
+    end
+end
+
+seg_display#(.FREQ_DIV(10000), .NUM_DIGITS(6), .SEG_ACTIVE_LOW(1)) numeric_display(
+    .clock_i(ctrl_cpu_clock),
+    .data_i(last_pc),
+    .point_i(0),
+
+    .segments_o(numeric_segments_n),
+    .enable_o(numeric_enable_n)
 );
 
 endmodule

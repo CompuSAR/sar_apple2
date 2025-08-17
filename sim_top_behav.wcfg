@@ -13,14 +13,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="3,634.848 ns"></ZoomEndTime>
+      <ZoomEndTime time="3,661.201 ns"></ZoomEndTime>
       <Cursor1Time time="1,000.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="220"></NameColumnWidth>
-      <ValueColumnWidth column_width="245"></ValueColumnWidth>
+      <ValueColumnWidth column_width="241"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="105" />
+   <WVObjectSize size="122" />
    <wvobject type="array" fp_name="/sim_top/top_module/debug">
       <obj_property name="ElementShortName">debug[3:0]</obj_property>
       <obj_property name="ObjectShortName">debug[3:0]</obj_property>
@@ -489,5 +489,73 @@
    <wvobject type="logic" fp_name="/sim_top/top_module/apple_io_block/ctrl_intr_o">
       <obj_property name="ElementShortName">ctrl_intr_o</obj_property>
       <obj_property name="ObjectShortName">ctrl_intr_o</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/numeric_display/clock_i">
+      <obj_property name="ElementShortName">clock_i</obj_property>
+      <obj_property name="ObjectShortName">clock_i</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/data_i">
+      <obj_property name="ElementShortName">data_i[23:0]</obj_property>
+      <obj_property name="ObjectShortName">data_i[23:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/point_i">
+      <obj_property name="ElementShortName">point_i[2:0]</obj_property>
+      <obj_property name="ObjectShortName">point_i[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/segments_o">
+      <obj_property name="ElementShortName">segments_o[7:0]</obj_property>
+      <obj_property name="ObjectShortName">segments_o[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/enable_o">
+      <obj_property name="ElementShortName">enable_o[5:0]</obj_property>
+      <obj_property name="ObjectShortName">enable_o[5:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/div_counter">
+      <obj_property name="ElementShortName">div_counter[6:0]</obj_property>
+      <obj_property name="ObjectShortName">div_counter[6:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/numeric_display/action_cycle">
+      <obj_property name="ElementShortName">action_cycle</obj_property>
+      <obj_property name="ObjectShortName">action_cycle</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/current_digit">
+      <obj_property name="ElementShortName">current_digit[2:0]</obj_property>
+      <obj_property name="ObjectShortName">current_digit[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/masked_data">
+      <obj_property name="ElementShortName">masked_data[23:0]</obj_property>
+      <obj_property name="ObjectShortName">masked_data[23:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/current_input">
+      <obj_property name="ElementShortName">current_input[3:0]</obj_property>
+      <obj_property name="ObjectShortName">current_input[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/interim_segments">
+      <obj_property name="ElementShortName">interim_segments[6:0]</obj_property>
+      <obj_property name="ObjectShortName">interim_segments[6:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/FREQ_DIV">
+      <obj_property name="ElementShortName">FREQ_DIV[31:0]</obj_property>
+      <obj_property name="ObjectShortName">FREQ_DIV[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/NUM_DIGITS">
+      <obj_property name="ElementShortName">NUM_DIGITS[31:0]</obj_property>
+      <obj_property name="ObjectShortName">NUM_DIGITS[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/SEG_ACTIVE_LOW">
+      <obj_property name="ElementShortName">SEG_ACTIVE_LOW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">SEG_ACTIVE_LOW[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/sim_top/top_module/numeric_display/ENABLE_ACTIVE_LOW">
+      <obj_property name="ElementShortName">ENABLE_ACTIVE_LOW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ENABLE_ACTIVE_LOW[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/numeric_display/DIV_COUNTER_ZERO">
+      <obj_property name="ElementShortName">DIV_COUNTER_ZERO</obj_property>
+      <obj_property name="ObjectShortName">DIV_COUNTER_ZERO</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/sim_top/top_module/numeric_display/CURRENT_DIGIT_ZERO">
+      <obj_property name="ElementShortName">CURRENT_DIGIT_ZERO</obj_property>
+      <obj_property name="ObjectShortName">CURRENT_DIGIT_ZERO</obj_property>
    </wvobject>
 </wave_config>
