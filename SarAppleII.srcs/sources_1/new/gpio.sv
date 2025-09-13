@@ -20,20 +20,13 @@ module gpio#(NUM_IN_PORTS = 1, NUM_OUT_PORTS = 1)
     output [31:0]       gp_out[NUM_OUT_PORTS-1:0]
 );
 
-logic rsp_data_next;
+logic [31:0] rsp_data_next;
 assign req_ready_o = 1'b1;
 
-logic [31:0] gp_out_value[NUM_OUT_PORTS] = { { 32'hffffffff } };
+logic [31:0] gp_out_value[NUM_OUT_PORTS] = '{ {NUM_OUT_PORTS{ 32'hffffffff }} };
 assign gp_out = gp_out_value;
 
-/*
-initial begin
-    foreach( gp_out_value[i] ) begin
-        $display("Shachar gpout[%0d] = %0x", i, gp_out_value[i]);
-        //gp_out[i] =  GPOUT_RESET_VALUES[i];
-    end
-end
-*/
+logic [31:0] gp_in_latch[NUM_IN_PORTS];
 
 always_ff@(posedge clock_i) begin
     rsp_data_o <= rsp_data_next;
@@ -43,9 +36,13 @@ always_ff@(posedge clock_i) begin
         gp_out_value[req_addr_i] <= req_data_i;
 end
 
+always_ff@(posedge clock_i) begin
+    gp_in_latch <= gp_in;
+end
+
 always_comb begin
     if( req_valid_i )
-        rsp_data_next = gp_in[req_addr_i];
+        rsp_data_next = gp_in_latch[req_addr_i];
     else
         rsp_data_next = 32'bX;
 end

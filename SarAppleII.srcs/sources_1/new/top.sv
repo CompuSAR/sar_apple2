@@ -26,7 +26,7 @@ module top
     input nReset,
 
     output leds[4],
-    input switches[4],
+    input [3:0] switches,
 
     output logic[3:0] debug,
 
@@ -175,7 +175,8 @@ localparam UART_RECV_IRQ = 1;
 logic [31:0]    iob_ddr_read_data;
 
 
-assign leds[0] = !nReset || !clocks_locked;
+assign leds[0] = !nReset;
+assign leds[1] = !clocks_locked;
 //assign leds[1] = gp_out[0][GPOUT0_6502_RESET];
 
 VexRiscv control_cpu(
@@ -388,7 +389,7 @@ cache#(
 );
 
 logic leds_reg[4] = { 1'b1, 1'b1, 1'b1, 1'b1 };
-assign leds[1] = leds_reg[1];
+//assign leds[1] = leds_reg[1];
 assign leds[2] = leds_reg[2];
 assign leds[3] = leds_reg[3];
 
@@ -543,7 +544,7 @@ gpio(
     .rsp_data_o(gpio_rsp_data),
     .rsp_valid_o(gpio_rsp_valid),
 
-    .gp_in( '{ { 32'b0 } } ),
+    .gp_in( '{ {28'b0, switches} } ),
     .gp_out( gp_out )
 );
 
