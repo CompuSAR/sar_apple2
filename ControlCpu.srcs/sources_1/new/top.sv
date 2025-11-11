@@ -58,7 +58,13 @@ module top
     inout   wire    [15:0]  ddr3_dq,
 
     output wire  [7:0] numeric_segments_n,
-    output wire  [5:0] numeric_enable_n
+    output wire  [5:0] numeric_enable_n,
+
+    output wire TMDS_clk_n,
+    output wire TMDS_clk_p,
+    output wire[2:0] TMDS_data_n,
+    output wire[2:0] TMDS_data_p,
+    output wire[0:0] HDMI_OEN
 );
 
 `ifdef SYNTHESIS
@@ -715,18 +721,32 @@ apple_pager pager(
 assign cache_port_cmd_addr_s[CACHE_PORT_IDX_6502] = bus8_paged_req_addr;
 
 assign cache_port_cmd_write_mask_s[CACHE_PORT_IDX_DISPLAY] = { CACHELINE_BYTES{1'b0} };
-display#(.CLOCK_SPEED(CTRL_CLOCK_HZ), .TEXT_PAGE_ADDR(32'h81010400))
+display#()
 apple_display(
-    .clock_i(ctrl_cpu_clock),
+    .raw_clock_i(board_clock),
+    .ctrl_clock_i(ctrl_cpu_clock),
     .reset_i(gp_out[0][GPOUT0_DISPLAY_RESET]),
 
-    .req_valid_o(cache_port_cmd_valid_s[CACHE_PORT_IDX_DISPLAY]),
-    .req_addr_o(cache_port_cmd_addr_s[CACHE_PORT_IDX_DISPLAY]),
-    .req_ack_i(cache_port_cmd_ready_n[CACHE_PORT_IDX_DISPLAY]),
-    .rsp_valid_i(cache_port_rsp_valid_n[CACHE_PORT_IDX_DISPLAY]),
-    .rsp_data_i(cache_port_rsp_read_data_n[CACHE_PORT_IDX_DISPLAY]),
+    /*
+    .ctrl_req_valid_i(),
+    .ctrl_req_ack_o(),
+    .ctrl_req_addr_i(),
+    .ctrl_req_data_i(),
+    .ctrl_rsp_valid_o(),
+    .ctrl_rsp_data_o(),
+    */
 
-    .uart_send_o(/*uart_tx*/ debug[0])
+    .dma_req_valid_o(cache_port_cmd_valid_s[CACHE_PORT_IDX_DISPLAY]),
+    .dma_req_addr_o(cache_port_cmd_addr_s[CACHE_PORT_IDX_DISPLAY]),
+    .dma_req_ack_i(cache_port_cmd_ready_n[CACHE_PORT_IDX_DISPLAY]),
+    .dma_rsp_valid_i(cache_port_rsp_valid_n[CACHE_PORT_IDX_DISPLAY]),
+    .dma_rsp_data_i(cache_port_rsp_read_data_n[CACHE_PORT_IDX_DISPLAY]),
+
+    .TMDS_clk_n,
+    .TMDS_clk_p,
+    .TMDS_data_n,
+    .TMDS_data_p,
+    .HDMI_OEN
 );
 
 logic[4*6-1:0] debug_display_data = 24'hffffff;

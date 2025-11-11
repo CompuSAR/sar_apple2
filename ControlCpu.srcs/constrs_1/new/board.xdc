@@ -84,3 +84,27 @@ set_property PACKAGE_PIN AB1 [get_ports {ddr3_dm[0]}]
 
 set_property IOSTANDARD SSTL15 [get_ports {ddr3_dm[1]}]
 set_property PACKAGE_PIN W2 [get_ports {ddr3_dm[1]}]
+
+############## HDMIOUT define#########################
+set_property IOSTANDARD TMDS_33 [get_ports TMDS_clk_n]
+
+set_property PACKAGE_PIN E1 [get_ports TMDS_clk_p]
+set_property IOSTANDARD TMDS_33 [get_ports TMDS_clk_p]
+
+set_property IOSTANDARD TMDS_33 [get_ports {TMDS_data_n[0]}]
+
+set_property PACKAGE_PIN G1 [get_ports {TMDS_data_p[0]}]
+set_property IOSTANDARD TMDS_33 [get_ports {TMDS_data_p[0]}]
+
+set_property IOSTANDARD TMDS_33 [get_ports {TMDS_data_n[1]}]
+
+set_property PACKAGE_PIN H2 [get_ports {TMDS_data_p[1]}]
+set_property IOSTANDARD TMDS_33 [get_ports {TMDS_data_p[1]}]
+
+set_property IOSTANDARD TMDS_33 [get_ports {TMDS_data_n[2]}]
+
+set_property PACKAGE_PIN K1 [get_ports {TMDS_data_p[2]}]
+set_property IOSTANDARD TMDS_33 [get_ports {TMDS_data_p[2]}]
+
+set_property PACKAGE_PIN M6 [get_ports {HDMI_OEN[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {HDMI_OEN[0]}]
