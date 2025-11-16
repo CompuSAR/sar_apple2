@@ -1,18 +1,25 @@
-#include <stdint.h>
-#include <string.h>
-
-#include <saros/sync/queue.h>
+#include "display_ctrl.h"
 
 #include "8bit_hook.h"
 #include "gpio.h"
 #include "reg.h"
 #include "uart.h"
 
+#include <saros/sync/queue.h>
+
 #include <saros/saros.h>
+
+#include <stdint.h>
+#include <string.h>
 
 namespace {
 constexpr uint32_t ROMS_BASE = 0x8100'0000;
 constexpr uint32_t BANK0_BASE = 0x8101'0000;
+
+constexpr uint32_t TEXT_PAGE0 = 0x0400;
+constexpr uint32_t TEXT_PAGE1 = 0x0800;
+constexpr uint32_t HGR_PAGE0 = 0x2000;
+constexpr uint32_t HGR_PAGE1 = 0x4000;
 
 constexpr size_t IO_BASE = 0xc000;
 
@@ -45,6 +52,8 @@ constexpr uint32_t Pager_IoOp = 0x1000;
 constexpr uint32_t IoDeviceNum = 6;
 
 constexpr uint32_t Io_Event = 0x0000;
+
+extern "C" const Display::CharSet charsetUs;
 
 static void io8_write(uint8_t port, uint8_t val) {
     reinterpret_cast<volatile uint8_t *>(ROMS_BASE)[IO_BASE + port] = val;
@@ -122,6 +131,10 @@ void start_8bit() {
     // Fill main memory with junk
     for( auto ptr = reinterpret_cast<uint32_t *>(BANK0_BASE); ptr != reinterpret_cast<uint32_t *>(BANK0_BASE + 64*1024); ++ptr )
         *ptr = 0xff00ff00;
+
+    // Start in text mode, default font
+    Display::selectCharset( &charsetUs );
+    Display::selectTextMode( BANK0_BASE + TEXT_PAGE0 );
 
     saros.createThread( uartHandler, nullptr );
 

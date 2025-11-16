@@ -272,6 +272,8 @@ logic apple_pager_enable, apple_pager_req_ack, apple_pager_rsp_valid;
 logic [31:0] apple_pager_rsp_data;
 logic ctl_apple_io_enable, ctl_apple_io_req_ack, ctl_apple_io_rsp_valid;
 logic [31:0] ctl_apple_io_rsp_data;
+logic display_enable, display_req_ack, display_rsp_valid;
+logic [31:0] display_rsp_data;
 
 io_block#(.CLOCK_HZ(CTRL_CLOCK_HZ)) iob(
     .clock(ctrl_cpu_clock),
@@ -323,7 +325,12 @@ io_block#(.CLOCK_HZ(CTRL_CLOCK_HZ)) iob(
     .passthrough_apple_io_enable(ctl_apple_io_enable),
     .passthrough_apple_io_req_ack(ctl_apple_io_req_ack),
     .passthrough_apple_io_rsp_valid(ctl_apple_io_rsp_valid),
-    .passthrough_apple_io_rsp_data(ctl_apple_io_rsp_data)
+    .passthrough_apple_io_rsp_data(ctl_apple_io_rsp_data),
+
+    .passthrough_display_enable(display_enable),
+    .passthrough_display_req_ack(display_req_ack),
+    .passthrough_display_rsp_valid(display_rsp_valid),
+    .passthrough_display_rsp_data(display_rsp_data)
 
 );
 
@@ -720,27 +727,44 @@ apple_pager pager(
 
 assign cache_port_cmd_addr_s[CACHE_PORT_IDX_6502] = bus8_paged_req_addr;
 
-assign cache_port_cmd_write_mask_s[CACHE_PORT_IDX_DISPLAY] = { CACHELINE_BYTES{1'b0} };
+logic [63:0] display_dma_rsp_data;
+
+bus_width_adjust#(.IN_WIDTH(64), .OUT_WIDTH(CACHELINE_BITS))
+display_width_adjust(
+    .clock_i(ctrl_cpu_clock),
+
+    .in_cmd_valid_i(cache_port_cmd_valid_s[CACHE_PORT_IDX_DISPLAY]),
+    .in_cmd_addr_i(cache_port_cmd_addr_s[CACHE_PORT_IDX_DISPLAY]),
+    .in_cmd_write_mask_i(4'b0000),
+    .in_cmd_write_data_i(64'hX),
+    .in_rsp_read_data_o(display_dma_rsp_data),
+
+    .out_cmd_ready_i(cache_port_cmd_ready_n[CACHE_PORT_IDX_DISPLAY]),
+    .out_cmd_write_mask_o(cache_port_cmd_write_mask_s[CACHE_PORT_IDX_DISPLAY]),
+    .out_cmd_write_data_o(cache_port_cmd_write_data_s[CACHE_PORT_IDX_DISPLAY]),
+    .out_rsp_valid_i(cache_port_rsp_valid_n[CACHE_PORT_IDX_DISPLAY]),
+    .out_rsp_read_data_i(cache_port_rsp_read_data_n[CACHE_PORT_IDX_DISPLAY])
+);
+
 display#()
 apple_display(
     .raw_clock_i(board_clock),
     .ctrl_clock_i(ctrl_cpu_clock),
     .reset_i(gp_out[0][GPOUT0_DISPLAY_RESET]),
 
-    /*
-    .ctrl_req_valid_i(),
-    .ctrl_req_ack_o(),
-    .ctrl_req_addr_i(),
-    .ctrl_req_data_i(),
-    .ctrl_rsp_valid_o(),
-    .ctrl_rsp_data_o(),
-    */
+    .ctrl_req_valid_i(display_enable),
+    .ctrl_req_ack_o(display_req_ack),
+    .ctrl_req_write_i(ctrl_dBus_cmd_payload_wr),
+    .ctrl_req_addr_i(ctrl_dBus_cmd_payload_address[15:0]),
+    .ctrl_req_data_i(ctrl_dBus_cmd_payload_data),
+    .ctrl_rsp_valid_o(display_rsp_valid),
+    .ctrl_rsp_data_o(display_rsp_data),
 
     .dma_req_valid_o(cache_port_cmd_valid_s[CACHE_PORT_IDX_DISPLAY]),
     .dma_req_addr_o(cache_port_cmd_addr_s[CACHE_PORT_IDX_DISPLAY]),
     .dma_req_ack_i(cache_port_cmd_ready_n[CACHE_PORT_IDX_DISPLAY]),
     .dma_rsp_valid_i(cache_port_rsp_valid_n[CACHE_PORT_IDX_DISPLAY]),
-    .dma_rsp_data_i(cache_port_rsp_read_data_n[CACHE_PORT_IDX_DISPLAY]),
+    .dma_rsp_data_i(display_dma_rsp_data),
 
     .TMDS_clk_n,
     .TMDS_clk_p,
