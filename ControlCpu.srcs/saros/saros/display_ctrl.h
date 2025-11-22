@@ -6,6 +6,12 @@
 
 namespace Display {
 
+struct RGB {
+    uint8_t red;
+    uint8_t green;
+    uint8_t blue;
+};
+
 struct CharBitmap {
     union {
         uint32_t raw[2];
